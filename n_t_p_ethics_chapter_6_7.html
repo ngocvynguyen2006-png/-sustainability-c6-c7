@@ -1,0 +1,2766 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ICAEW Ethics — Chapter 6 & 7 Study Hub</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+
+    /* 3D Flashcard Flip */
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+      transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+
+    @keyframes fadeSlide {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-slide {
+      animation: fadeSlide 0.22s ease-out;
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Sticky Header -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3 space-y-3">
+      <!-- Top Row: Brand & Chapter Switcher -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-sky-600 to-teal-600 flex items-center justify-center text-white font-extrabold text-sm shadow-sm shrink-0">
+            E6·7
+          </div>
+          <div>
+            <h1 id="header-title" class="text-base sm:text-lg font-bold text-slate-800 leading-tight">Chapter 6: Introduction to ethics</h1>
+            <p id="header-subtitle" class="text-xs text-slate-500">ICAEW Sustainability & Ethics • 42 mục câu hỏi</p>
+          </div>
+        </div>
+
+        <!-- Chapter Switcher -->
+        <div class="inline-flex bg-slate-100 p-1 rounded-xl self-start md:self-auto w-full md:w-auto">
+          <button id="ch-btn-c6" onclick="switchChapter('c6')" class="flex-1 md:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition-all bg-sky-600 text-white shadow-sm">
+            Chapter 6 (42 câu)
+          </button>
+          <button id="ch-btn-c7" onclick="switchChapter('c7')" class="flex-1 md:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-slate-900">
+            Chapter 7 (83 câu)
+          </button>
+        </div>
+      </div>
+
+      <!-- Bottom Row: Feature Tabs -->
+      <nav class="flex bg-slate-100 p-1 rounded-xl w-full sm:w-fit">
+        <button id="tab-quiz" onclick="switchTab('quiz')" class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-white text-sky-700 shadow-sm">
+          Trắc nghiệm
+        </button>
+        <button id="tab-flashcards" onclick="switchTab('flashcards')" class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900">
+          Flashcards
+        </button>
+        <button id="tab-review" onclick="switchTab('review')" class="flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 relative">
+          Thống kê & Đánh dấu
+          <span id="flag-count-badge" class="hidden ml-1 px-1.5 py-0.5 text-[10px] font-bold bg-amber-500 text-white rounded-full">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 py-6">
+
+    <!-- ==================== TAB 1: QUIZ CAROUSEL ==================== -->
+    <section id="view-quiz" class="space-y-5">
+
+      <!-- Mode & Cycle Control Bar -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Chế độ:</span>
+          <div class="inline-flex bg-slate-100 p-1 rounded-xl">
+            <button id="mode-practice" onclick="setQuizMode('practice')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-sky-600 text-white shadow-sm">
+              Luyện tập (Hiện đáp án ngay)
+            </button>
+            <button id="mode-exam" onclick="setQuizMode('exam')" class="px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:text-slate-900">
+              Kiểm tra (Nộp bài cuối chu kỳ)
+            </button>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <span id="cycle-badge" class="px-3 py-1.5 rounded-xl bg-sky-50 text-sky-700 text-xs font-semibold border border-sky-100">
+            Chu kỳ #1 (42 câu)
+          </span>
+          <button onclick="startNewCycle(false)" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors">
+            ↻ Xáo trộn chu kỳ mới
+          </button>
+          <button id="btn-submit-exam" onclick="finishCycle()" class="hidden px-3.5 py-1.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold shadow-sm transition-colors">
+            Nộp bài & Chấm điểm
+          </button>
+        </div>
+      </div>
+
+      <!-- Progress & Error Rate Bar -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+        <div class="flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm mb-2">
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="flex items-center gap-1.5">
+              <span class="font-semibold text-slate-700">Tiến độ chu kỳ:</span>
+              <span id="progress-text" class="font-bold text-sky-700">0/42 câu (0%)</span>
+            </div>
+            <span id="live-error-badge" class="hidden px-2.5 py-0.5 rounded-full bg-rose-50 text-rose-600 text-xs font-bold border border-rose-100">
+              Tỷ lệ sai: 0%
+            </span>
+          </div>
+          <button onclick="toggleNavigator()" class="text-xs font-semibold text-sky-700 hover:text-sky-900 underline underline-offset-2">
+            <span id="nav-toggle-label">Hiện danh sách câu hỏi</span>
+          </button>
+        </div>
+        <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+          <div id="progress-bar" class="h-full bg-gradient-to-r from-sky-500 to-teal-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+        </div>
+
+        <!-- Collapsible Question Navigator -->
+        <div id="question-navigator" class="hidden mt-4 pt-4 border-t border-slate-100">
+          <div class="flex flex-wrap items-center gap-3 text-[11px] text-slate-500 mb-2.5">
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span> Đúng</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-rose-500 inline-block"></span> Sai</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-sky-500 inline-block"></span> Đã chọn (Thi)</span>
+            <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-amber-400 inline-block"></span> Phân vân</span>
+          </div>
+          <div id="nav-grid" class="grid grid-cols-6 sm:grid-cols-10 md:grid-cols-12 gap-1.5"></div>
+        </div>
+      </div>
+
+      <!-- Exam Graded Banner -->
+      <div id="exam-review-banner" class="hidden bg-sky-50 border border-sky-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <p class="text-sm font-bold text-sky-900">Đã chấm điểm chu kỳ hiện tại!</p>
+          <p id="exam-review-stats" class="text-xs text-sky-700 mt-0.5"></p>
+        </div>
+        <button onclick="openSummaryModal()" class="px-4 py-2 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-xs font-semibold shrink-0">
+          Xem bảng tổng kết
+        </button>
+      </div>
+
+      <!-- Carousel Question Card -->
+      <div id="question-card" class="bg-white rounded-3xl border border-slate-200 shadow-xs p-5 sm:p-8 animate-fade-slide">
+        <!-- Card Meta -->
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-5 pb-4 border-b border-slate-100">
+          <div class="flex flex-wrap items-center gap-2">
+            <span id="q-position" class="px-3 py-1 rounded-full bg-slate-800 text-white text-xs font-bold">Câu 1 / 42</span>
+            <span id="q-original-id" class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold">Q1</span>
+            <span id="q-lo-badge" class="px-2.5 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-semibold border border-sky-100">LO 6a</span>
+            <span id="q-multi-badge" class="hidden px-2.5 py-1 rounded-full bg-indigo-50 text-indigo-700 text-xs font-bold border border-indigo-100">Chọn 2 đáp án</span>
+          </div>
+
+          <button id="btn-flag" onclick="toggleFlagCurrent()" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-all">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+            <span id="btn-flag-text">Phân vân / Chọn lụi</span>
+          </button>
+        </div>
+
+        <!-- Question Text -->
+        <div id="q-text" class="text-base sm:text-lg font-semibold text-slate-800 leading-relaxed whitespace-pre-line mb-6"></div>
+
+        <!-- Options -->
+        <div id="q-options" class="space-y-3"></div>
+
+        <!-- Multi-choice Check Button -->
+        <div id="multi-check-wrap" class="hidden mt-5">
+          <button onclick="submitMultiPractice()" class="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold shadow-sm transition-colors">
+            Xác nhận đáp án
+          </button>
+        </div>
+
+        <!-- Explanation Box -->
+        <div id="explanation-box" class="hidden mt-6 p-4 sm:p-5 rounded-2xl border">
+          <div class="flex items-center gap-2 mb-2">
+            <span id="exp-status-badge" class="px-2.5 py-0.5 rounded-full text-xs font-bold"></span>
+            <span class="text-xs font-semibold text-slate-500">Giải thích cốt lõi (ICAEW)</span>
+          </div>
+          <p id="exp-correct-answer" class="text-xs sm:text-sm font-semibold text-slate-800 mb-2"></p>
+          <p id="exp-text" class="text-sm text-slate-700 leading-relaxed"></p>
+        </div>
+
+        <!-- Prev / Next Footer -->
+        <div class="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between gap-3">
+          <button id="btn-prev" onclick="prevQuestion()" class="flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 disabled:opacity-40 disabled:cursor-not-allowed text-slate-700 text-sm font-semibold transition-colors">
+            ← Câu trước
+          </button>
+          <span class="hidden sm:inline text-xs text-slate-400">Dùng phím ← / → để chuyển câu</span>
+          <button id="btn-next" onclick="nextQuestion()" class="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold shadow-sm transition-colors">
+            Câu tiếp →
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 2: FLASHCARDS ==================== -->
+    <section id="view-flashcards" class="hidden space-y-5">
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <h2 id="fc-heading" class="text-base font-bold text-slate-800">Flashcards ôn tập mỗi ngày (Chapter 6)</h2>
+          <p class="text-xs text-slate-500">Chạm vào thẻ hoặc nhấn <kbd class="px-1.5 py-0.5 bg-slate-100 rounded border border-slate-300 text-[10px]">Space</kbd> để lật mặt sau</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <div class="inline-flex bg-slate-100 p-1 rounded-xl">
+            <button id="fc-filter-all" onclick="setFlashcardFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm">
+              Tất cả (<span id="fc-total-count">0</span>)
+            </button>
+            <button id="fc-filter-review" onclick="setFlashcardFilter('review')" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600">
+              Cần ôn lại (<span id="fc-review-count">0</span>)
+            </button>
+          </div>
+          <button onclick="shuffleFlashcards()" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors">
+            ↻ Xáo trộn
+          </button>
+        </div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+        <span id="fc-position" class="font-semibold text-slate-700">Thẻ 1 / 16</span>
+        <span id="fc-mastered-stats" class="font-semibold text-teal-700">Đã nhớ: 0 / 16</span>
+      </div>
+
+      <!-- 3D Flip Card -->
+      <div class="perspective-1000 w-full max-w-2xl mx-auto">
+        <div id="fc-card" onclick="flipFlashcard()" class="relative w-full min-h-[300px] sm:min-h-[340px] cursor-pointer transform-style-3d">
+          <!-- Front -->
+          <div class="absolute inset-0 backface-hidden bg-white rounded-3xl border border-slate-200 shadow-xs p-6 sm:p-10 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span id="fc-front-tag" class="px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold border border-sky-100">LO 6a</span>
+              <span id="fc-status-pill" class="px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500">Chưa đánh giá</span>
+            </div>
+            <div class="text-center my-auto py-4">
+              <p class="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">Khái niệm / Thuật ngữ</p>
+              <h3 id="fc-front-text" class="text-xl sm:text-2xl font-bold text-slate-800 leading-snug"></h3>
+            </div>
+            <p class="text-center text-xs text-slate-400">Nhấn để xem định nghĩa & từ khóa cốt lõi</p>
+          </div>
+
+          <!-- Back -->
+          <div class="absolute inset-0 backface-hidden rotate-y-180 bg-gradient-to-br from-sky-600 to-teal-700 text-white rounded-3xl shadow-md p-6 sm:p-10 flex flex-col justify-between">
+            <div class="flex items-center justify-between">
+              <span class="px-3 py-1 rounded-full bg-white/15 text-white text-xs font-bold">Kiến thức cốt lõi</span>
+              <span id="fc-back-tag" class="text-xs text-sky-100 font-semibold"></span>
+            </div>
+            <div class="my-auto py-3 space-y-3">
+              <p id="fc-back-text" class="text-sm sm:text-base leading-relaxed font-medium whitespace-pre-line"></p>
+              <div id="fc-back-tip" class="p-3 rounded-xl bg-black/15 text-xs sm:text-sm text-sky-50"></div>
+            </div>
+            <p class="text-center text-xs text-sky-200">Nhấn để lật lại mặt trước</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flashcard Controls -->
+      <div class="max-w-2xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 pt-2">
+        <button onclick="prevFlashcard()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-semibold">
+          ← Thẻ trước
+        </button>
+
+        <div class="flex items-center gap-2.5 w-full sm:w-auto justify-center">
+          <button onclick="markFlashcard('review')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-800 text-sm font-semibold transition-colors">
+            Cần ôn lại
+          </button>
+          <button onclick="markFlashcard('mastered')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-teal-600 hover:bg-teal-700 text-white text-sm font-semibold shadow-sm transition-colors">
+            ✓ Đã nhớ
+          </button>
+        </div>
+
+        <button onclick="nextFlashcard()" class="w-full sm:w-auto px-4 py-2.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-50 text-slate-700 text-sm font-semibold">
+          Thẻ tiếp →
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== TAB 3: REVIEW & STATS ==================== -->
+    <section id="view-review" class="hidden space-y-6">
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <p class="text-xs text-slate-500 font-medium">Chu kỳ hoàn thành</p>
+          <p id="stat-cycles" class="text-2xl font-extrabold text-slate-800 mt-1">0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <p class="text-xs text-slate-500 font-medium">Tỷ lệ sai gần nhất</p>
+          <p id="stat-last-error" class="text-2xl font-extrabold text-rose-600 mt-1">--%</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <p class="text-xs text-slate-500 font-medium">Câu đang phân vân</p>
+          <p id="stat-flagged" class="text-2xl font-extrabold text-amber-600 mt-1">0</p>
+        </div>
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 shadow-xs">
+          <p class="text-xs text-slate-500 font-medium">Flashcards đã nhớ</p>
+          <p id="stat-fc-mastered" class="text-2xl font-extrabold text-teal-600 mt-1">0/0</p>
+        </div>
+      </div>
+
+      <!-- Flagged List -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
+          <div>
+            <h2 id="flagged-heading" class="text-base font-bold text-slate-800">Danh sách câu Phân vân / Chọn lụi (Chapter 6)</h2>
+            <p class="text-xs text-slate-500">Các câu bạn đánh dấu trong chương này được lưu riêng tại đây.</p>
+          </div>
+          <button id="btn-practice-flagged" onclick="startFlaggedOnlyCycle()" class="px-4 py-2 rounded-xl bg-amber-500 hover:bg-amber-600 disabled:opacity-40 text-white text-xs font-semibold shadow-sm transition-colors">
+            Luyện riêng các câu đánh dấu
+          </button>
+        </div>
+        <div id="flagged-list" class="space-y-3"></div>
+      </div>
+
+      <!-- Cycle History -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-5 shadow-xs">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h2 id="history-heading" class="text-base font-bold text-slate-800">Lịch sử chu kỳ ôn tập (Chapter 6)</h2>
+            <p class="text-xs text-slate-500">Theo dõi tỷ lệ sai giảm dần qua từng chu kỳ xáo trộn.</p>
+          </div>
+          <div id="reset-confirm-area">
+            <button onclick="showResetConfirm()" class="text-xs font-semibold text-rose-600 hover:text-rose-800 underline">
+              Xóa dữ liệu chương này
+            </button>
+          </div>
+        </div>
+        <div id="history-list" class="overflow-x-auto"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Cycle Summary Modal -->
+  <div id="summary-modal" class="hidden fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-xl animate-fade-slide">
+      <div class="text-center mb-5">
+        <div class="w-14 h-14 mx-auto rounded-2xl bg-sky-100 text-sky-700 flex items-center justify-center text-2xl font-bold mb-3">
+          ✓
+        </div>
+        <h3 class="text-xl font-extrabold text-slate-800">Hoàn thành chu kỳ!</h3>
+        <p id="modal-cycle-subtitle" class="text-xs text-slate-500 mt-1"></p>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 mb-6">
+        <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-100 text-center">
+          <p class="text-xs text-emerald-700 font-medium">Điểm / Chính xác</p>
+          <p id="modal-correct" class="text-xl font-extrabold text-emerald-700 mt-0.5">0/0 (0%)</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-rose-50 border border-rose-100 text-center">
+          <p class="text-xs text-rose-700 font-medium">Tỷ lệ sai</p>
+          <p id="modal-error-rate" class="text-2xl font-extrabold text-rose-600 mt-0.5">0%</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 text-center">
+          <p class="text-xs text-slate-600 font-medium">Số câu sai</p>
+          <p id="modal-wrong" class="text-xl font-bold text-slate-800 mt-0.5">0</p>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-amber-50 border border-amber-100 text-center">
+          <p class="text-xs text-amber-700 font-medium">Phân vân / Lụi</p>
+          <p id="modal-flagged" class="text-xl font-bold text-amber-700 mt-0.5">0</p>
+        </div>
+      </div>
+
+      <div class="space-y-2.5">
+        <button id="modal-btn-review-weak" onclick="startWeakCycleFromModal()" class="w-full py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white text-sm font-semibold shadow-sm transition-colors">
+          Ôn lại câu sai & phân vân
+        </button>
+        <button onclick="startNewCycle(true)" class="w-full py-2.5 rounded-xl bg-sky-600 hover:bg-sky-700 text-white text-sm font-semibold shadow-sm transition-colors">
+          Bắt đầu chu kỳ mới (Xáo trộn)
+        </button>
+        <button onclick="closeSummaryModal()" class="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold transition-colors">
+          Đóng & xem lại từng câu
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast" class="hidden fixed bottom-5 right-5 z-50 bg-slate-800 text-white text-xs sm:text-sm font-medium px-4 py-3 rounded-xl shadow-lg"></div>
+
+  <script>
+    // =========================================================================
+    // 1. COMPLETE VERIFIED DATA — CHAPTER 6 (42 ITEMS) & CHAPTER 7 (83 ITEMS)
+    // =========================================================================
+    const CHAPTER_META = {
+      c6: { name: "Chapter 6: Introduction to ethics", short: "Chapter 6" },
+      c7: { name: "Chapter 7: Ethics and public trust", short: "Chapter 7" }
+    };
+
+    const CHAPTER_QUESTIONS = {
+      c6: [
+        {
+          id: "Q1", lo: "LO 6a", type: "single",
+          question: "Ethics is the study of the values and principles that influence behaviour.\n\nRequirement: Which of the following statements about ethics is/are true?\n(1) Ethical means morally correct.\n(2) Ethical theories that are valid today originated in the 20th and 21st centuries.\n(3) There is no single ethical theory that is comprehensive and that has been viewed as 'correct' in all places and at all times.",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "1 and 3 only" },
+            { key: "C", text: "2 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["B"],
+          explanation: "Ethical means morally correct and ethical behaviour means acting in an acceptable manner. Ethical theories have built up over thousands of years. No one theory is all-embracing or applicable to all places, and at all times."
+        },
+        {
+          id: "Q2", lo: "LO 6c", type: "single",
+          question: "An activity may be contrary to a legal rule but may still be viewed as ethical by professional accountants.\n\nRequirement: Which of the following is an example of such an activity?",
+          options: [
+            { key: "A", text: "Manipulating the financial statements of an employer to help them earn a bonus" },
+            { key: "B", text: "Whistleblowing regarding supplier contracts which involve the use of child labour" },
+            { key: "C", text: "Signing an audit report after having completed all procedures" },
+            { key: "D", text: "Paying minimum wage to all employees below manager level" }
+          ],
+          correct: ["B"],
+          explanation: "Whistleblowing regarding contracts (B) may be contrary to an organisation's regulations and confidentiality rules, but speaking out about child labour is ethical as it is the right thing to do for wider society. Manipulating statements (A) is illegal and unethical; signing a completed audit report (C) is legal and ethical; paying minimum wage (D) is legal but may be viewed as unethical."
+        },
+        {
+          id: "Q3", lo: "LO 6a", type: "single",
+          question: "Paula is explaining why new trainees in her firm should study ethics.\n\nRequirement: Which of the following would be an appropriate statement for Paula to make?",
+          options: [
+            { key: "A", text: "It will make you feel morally superior to the clients you speak to, but it might not increase fee income" },
+            { key: "B", text: "It will increase fee income, and ensure that you are promoted more quickly" },
+            { key: "C", text: "It can help clarify judgements and decisions, but there might not always be a 'right' answer" },
+            { key: "D", text: "There will always be a 'right' answer, but it might not ensure that you are promoted quickly" }
+          ],
+          correct: ["C"],
+          explanation: "Studying ethics can help when exercising professional judgements and making ethical decisions, but it does not provide a 'rule book' that will help to arrive at the correct answer in all situations."
+        },
+        {
+          id: "Q4", lo: "LO 6d", type: "multi", selectCount: 2,
+          question: "Shakti is a professional accountant who works for a telecommunications company. She is carrying out a review of new policies in the finance department and how they impact connected stakeholders.\n\nRequirement: Which two of the following stakeholders will be included in this review?",
+          options: [
+            { key: "A", text: "Employees" },
+            { key: "B", text: "Customers" },
+            { key: "C", text: "Suppliers" },
+            { key: "D", text: "Management" },
+            { key: "E", text: "Government" }
+          ],
+          correct: ["B", "C"],
+          explanation: "Connected stakeholders are those with contractual relationships with the company that are not employees or management (e.g. customers, suppliers, shareholders)."
+        },
+        {
+          id: "Q5", lo: "LO 6d", type: "single",
+          question: "Shepink SpA currently allows its employees two days of paid leave per year to take part in volunteering activities in local charities. Due to financial pressures, management is considering reducing this to one day per year.\n\nRequirement: Which of the following is an external stakeholder group which would be affected by this decision?",
+          options: [
+            { key: "A", text: "Local charities" },
+            { key: "B", text: "Shepink's employees" },
+            { key: "C", text: "Shepink's shareholders" },
+            { key: "D", text: "Shepink's management" }
+          ],
+          correct: ["A"],
+          explanation: "Local charities are an external stakeholder group affected by the decision. Employees and management are internal stakeholders, and shareholders are connected stakeholders."
+        },
+        {
+          id: "Q6", lo: "LO 6b", type: "single",
+          question: "Jatinda wrote a preparatory note: 'Consider any action's consequences on lots of people to be the most important aspect in deciding whether it is ethical'.\n\nRequirement: Which ethical theory/theories does the note apply to?\n(1) Objectivism\n(2) Relativism\n(3) Teleological\n(4) Utilitarianism",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "2 and 3 only" },
+            { key: "C", text: "1 and 4 only" },
+            { key: "D", text: "3 and 4 only" }
+          ],
+          correct: ["D"],
+          explanation: "Teleological (consequential) ethics evaluates whether an action is right or wrong based on its consequences or goals. Utilitarianism determines right or wrong based on whether consequences result in the greatest good for the greatest number of people."
+        },
+        {
+          id: "Q7", lo: "LO 6b", type: "single",
+          question: "Elinor is writing a report on the differences in what is believed to be the morally correct way to treat staff in different countries.\n\nRequirement: Which ethical theory is Elinor examining when writing the report?",
+          options: [
+            { key: "A", text: "Relativism" },
+            { key: "B", text: "Utilitarianism" },
+            { key: "C", text: "Teleological" },
+            { key: "D", text: "Deontological" }
+          ],
+          correct: ["A"],
+          explanation: "Relativism is the view that knowledge, truth and morality exist in relation to culture, society or historical context, and are not absolute."
+        },
+        {
+          id: "Q8", lo: "LO 6b", type: "single",
+          question: "Which of the following ethical theories is most likely to lead to the establishment of rules that embody ethical behaviour?",
+          options: [
+            { key: "A", text: "Relativism - because it considers that there is a set of correct moral positions that are not altered by time-period or location" },
+            { key: "B", text: "Objectivism - because it considers that there is a set of practices that are the correct moral position" },
+            { key: "C", text: "Relativism - because it considers that it is not possible to define a set of moral principles" },
+            { key: "D", text: "Objectivism - because it considers that knowledge, truth and morality exist only in relation to culture" }
+          ],
+          correct: ["B"],
+          explanation: "Objectivism holds that there are universal moral principles which are true and binding, meaning rules can be established to ensure behaviour complies with those principles."
+        },
+        {
+          id: "Q9a", lo: "LO 6b", type: "single",
+          question: "Densten Ltd's directors, Tom and Ashanti, are discussing a product recall.\nTom: 'I think we should recall the product immediately. I know this will be expensive and we may face negative social media attention, but it's the right thing to do.'\n\nRequirement: Identify whether the belief underlying Tom's statement is correct or incorrect:\n'Tom believes he has applied deontological ethics in this discussion.'",
+          options: [
+            { key: "A", text: "Correct" },
+            { key: "B", text: "Incorrect" }
+          ],
+          correct: ["A"],
+          explanation: "Deontological ethics evaluates an action based on whether it adheres to rules or duties rather than consequences. Tom prioritised doing the right thing over potential consequences."
+        },
+        {
+          id: "Q9b", lo: "LO 6c", type: "single",
+          question: "Densten Ltd's directors, Tom and Ashanti, are discussing a product recall.\nAshanti: 'No, a mass recall is unnecessary and will be more expensive than dealing with individual issues when they arise. We don't legally have to recall the products, so why should we do it?'\n\nRequirement: Identify whether the belief underlying Ashanti's statement is correct or incorrect:\n'Ashanti believes that acting in accordance with the law is the same as acting ethically.'",
+          options: [
+            { key: "C", text: "Correct" },
+            { key: "D", text: "Incorrect" }
+          ],
+          correct: ["D"],
+          explanation: "Acting ethically usually goes beyond obeying laws, rules and regulations—it is about doing the right thing in the circumstances. Illegal actions are, however, highly unlikely to be ethical."
+        },
+        {
+          id: "Q10", lo: "LO 6c", type: "multi", selectCount: 3,
+          question: "Rohan works for a company that prides itself on making environmentally sustainable decisions due to its ethical approach to decision making.\n\nRequirement: Which three of the following are examples of making environmentally sustainable decisions?",
+          options: [
+            { key: "A", text: "Selecting suppliers based on the lowest cost option" },
+            { key: "B", text: "Paying its employees a fair rate of pay" },
+            { key: "C", text: "Using recycled products in its manufacturing process" },
+            { key: "D", text: "Changing to biodegradable packaging" },
+            { key: "E", text: "Not informing customers about a safety defect on one of its products" }
+          ],
+          correct: ["B", "C", "D"],
+          explanation: "Paying a fair rate of pay (B), using recycled products (C), and changing to biodegradable packaging (D) are all examples of sustainable business decisions demonstrating acceptable business ethics."
+        },
+        {
+          id: "Q11", lo: "LO 6e", type: "single",
+          question: "Pastel AG has a code of conduct for employees. The directors believe it has the following potential benefits:\n(1) It helps to reduce the risk of fines and legal issues as it promotes legal compliance.\n(2) It sets out strict rules that its employees should follow when making decisions.\n(3) It helps to increase profits as decision making will prioritise decisions which promote the financial success of the company.\n(4) It can help the company to grow as it promotes openness, transparency and trust in decision making.\n\nRequirement: Which of the potential benefits identified by the directors are correct?",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "2 and 3 only" },
+            { key: "C", text: "1 and 4 only" },
+            { key: "D", text: "3 and 4 only" }
+          ],
+          correct: ["C"],
+          explanation: "A code of conduct promotes legal compliance (reducing fines) and fosters openness, transparency, and trust. It sets out standards/principles rather than strict rules, and does not prioritise financial success."
+        },
+        {
+          id: "Q12", lo: "LO 6e", type: "single",
+          question: "Jess tells Martin she firmly believes a new tax planning arrangement is unethical. Two days later at lunch with other department members who speak positively about it, Jess agrees and says no one could consider it unethical.\n\nRequirement: What is Jess's change of opinion an example of?",
+          options: [
+            { key: "A", text: "Fraud" },
+            { key: "B", text: "Mentoring" },
+            { key: "C", text: "Confidentiality" },
+            { key: "D", text: "Group-think" }
+          ],
+          correct: ["D"],
+          explanation: "Group-think occurs when the desire for conformity within a group leads to unethical decision making, causing individuals to compromise their own ethical principles."
+        },
+        {
+          id: "Q13", lo: "LO 6e", type: "multi", selectCount: 2,
+          question: "The directors of Jogan Ltd are keen to promote an ethical culture within the organisation.\n\nRequirement: Which two of the following would help the directors to promote an ethical culture?",
+          options: [
+            { key: "A", text: "Introduce a code of conduct which incorporates ethical values" },
+            { key: "B", text: "Change the company bonus scheme to reward employees who contribute to maximising profit" },
+            { key: "C", text: "Introduce a confidential 'speak up' programme to allow employees to raise issues confidentially" },
+            { key: "D", text: "Pass responsibility for all decision making to employees" },
+            { key: "E", text: "Reduce the controls in place within the organisation to reduce the extent of checks and oversight over decisions" }
+          ],
+          correct: ["A", "C"],
+          explanation: "Introducing an ethical code of conduct (A) and a confidential 'speak up' programme (C) promote an ethical culture. Directors should set the 'tone at the top' rather than passing responsibility, and controls help ensure ethical compliance."
+        },
+        {
+          id: "Q14", lo: "LO 6f", type: "multi", selectCount: 3,
+          question: "Which three of the following are common attributes of a profession?",
+          options: [
+            { key: "A", text: "Permitted to set laws" },
+            { key: "B", text: "Permitted to set regulations and policies" },
+            { key: "C", text: "Set core values which their members adhere to" },
+            { key: "D", text: "Held to account by external parties" },
+            { key: "E", text: "Restrict entry to membership" }
+          ],
+          correct: ["B", "C", "E"],
+          explanation: "Professions act autonomously to set their own regulations/policies (B), have shared core values/code of ethics (C), and restrict entry via strict technical/competence requirements (E). They are not law-setting bodies and are self-regulating."
+        },
+        {
+          id: "Q15", lo: "LO 6f", type: "single",
+          question: "Which of the following are ways in which the accountancy profession supports the effective working of capital markets?\n(1) It is a provider of finance.\n(2) It helps to ensure adequate information is provided on which decisions can be made by stakeholders in business.\n(3) It restricts the provision of information only to institutional investors.",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "2 only" },
+            { key: "C", text: "2 and 3 only" },
+            { key: "D", text: "1 and 3 only" }
+          ],
+          correct: ["B"],
+          explanation: "The accountancy profession helps ensure high quality, accurate information is available to all stakeholders (not just institutional investors). It does not directly provide or lend finance."
+        },
+        {
+          id: "Q16", lo: "LO 6g", type: "single",
+          question: "Kemi is a student member of ICAEW. She works as an auditor for a large professional services company and holds unpaid roles as the trustee of a charity and as a coach at her local running club.\n\nRequirement: In which roles does Kemi need to apply professional ethics?",
+          options: [
+            { key: "A", text: "Her paid role as auditor only" },
+            { key: "B", text: "Her roles as auditor and charity trustee only" },
+            { key: "C", text: "Her roles as auditor, charity trustee and coach at her local running club" },
+            { key: "D", text: "None of her roles as she is a student member" }
+          ],
+          correct: ["B"],
+          explanation: "A professional accountant (including students) must apply professional ethics in all work undertaken in a professional capacity, including unpaid voluntary work like charity trustee, but not as a running coach."
+        },
+        {
+          id: "Q17a", lo: "LO 6g", type: "single",
+          question: "Mo works in assurance (statutory audits and sustainability assurance) and volunteers as treasurer of a tennis club (preparing accounts and grant applications).\n\nRequirement: Identify whether the following statement is true or false:\n'Mo has explained to the board at the tennis club that he must apply professional ethics in his voluntary role as treasurer.'",
+          options: [
+            { key: "A", text: "True" },
+            { key: "B", text: "False" }
+          ],
+          correct: ["A"],
+          explanation: "Mo must apply professional ethics to professional accountancy work undertaken in a voluntary capacity (preparing accounts and grant applications)."
+        },
+        {
+          id: "Q17b", lo: "LO 6g", type: "single",
+          question: "Mo works in assurance (statutory audits and sustainability assurance) and volunteers as treasurer of a tennis club.\n\nRequirement: Identify whether the following statement is true or false:\n'Mo has stated that professional ethics must be applied to audit engagements but not to assurance engagements.'",
+          options: [
+            { key: "C", text: "True" },
+            { key: "D", text: "False" }
+          ],
+          correct: ["D"],
+          explanation: "A professional accountant should apply professional ethics in all work undertaken in a professional capacity, including both audit engagements and assurance engagements."
+        },
+        {
+          id: "Q18", lo: "LO 6a", type: "single",
+          question: "Acceptable business ethics change over time.\n\nRequirement: What is the principal factor driving the change in business ethics over time?",
+          options: [
+            { key: "A", text: "The expectations of society" },
+            { key: "B", text: "The values of senior management" },
+            { key: "C", text: "Company policies" },
+            { key: "D", text: "Government regulation" }
+          ],
+          correct: ["A"],
+          explanation: "Society's expectations, which can and do change over time, drive the change in business ethics."
+        },
+        {
+          id: "Q19", lo: "LO 6e", type: "single",
+          question: "The board of Lakea plc is concerned that the chief executive's actions are undermining ethical culture—she fails to listen to managers' concerns about unfair treatment of suppliers due to delayed payments.\n\nRequirement: Which action could the board take to improve Lakea's ethical culture?",
+          options: [
+            { key: "A", text: "Instruct Lakea's purchasing department to renegotiate supplier contracts" },
+            { key: "B", text: "Demonstrate ethical leadership by encouraging Lakea's chief executive to be more open" },
+            { key: "C", text: "Remind all employees about Lakea's code of ethics and conduct" },
+            { key: "D", text: "Brief shareholders more fully about Lakea's incentive scheme for managers" }
+          ],
+          correct: ["B"],
+          explanation: "Ethical culture is improved through ethical leadership from the board, corporate codes of ethics, and supportive policies ('speak out'). Encouraging the CEO to be more open demonstrates ethical leadership."
+        },
+        {
+          id: "Q20", lo: "LO 6f", type: "single",
+          question: "Su is an ICAEW member who works for CGN, a large professional services firm based within the UK.\n\nRequirement: Which organisation has primary responsibility for the regulation of Su?",
+          options: [
+            { key: "A", text: "CGN" },
+            { key: "B", text: "The UK Government" },
+            { key: "C", text: "ICAEW" },
+            { key: "D", text: "The Financial Reporting Council (FRC)" }
+          ],
+          correct: ["C"],
+          explanation: "Professional accountancy bodies (ICAEW) have primary responsibility for regulating their members in their professional capacity. The FRC has oversight of ICAEW's regulation."
+        },
+        {
+          id: "Q21", lo: "LO 6f", type: "multi", selectCount: 2,
+          question: "Upholding professional ethics is a key part of being a professional accountant.\n\nRequirement: Which two of the following are positive consequences of an accountant applying professional ethics?",
+          options: [
+            { key: "A", text: "It ensures that accounting information is always free from error" },
+            { key: "B", text: "It helps to build trust and credibility with the users of accounting information" },
+            { key: "C", text: "It helps to protect the public interest" },
+            { key: "D", text: "It helps to ensure that professional accountants do not focus on the maximisation of profits" },
+            { key: "E", text: "It avoids the need to set laws and regulations which impact on professional accountants" }
+          ],
+          correct: ["B", "C"],
+          explanation: "Applying professional ethics builds trust and credibility (B) and protects the public interest (C). It cannot guarantee zero errors (A) and does not replace laws and regulations (E)."
+        },
+        {
+          id: "Q22", lo: "LO 6b", type: "single",
+          question: "Asha discovers a client has not paid employees the national minimum wage for three years. The client argues everyone in the industry does it and paying more could cause redundancies. Asha takes an objectivist viewpoint.\n\nRequirement: What is Asha's response from an objectivist viewpoint?",
+          options: [
+            { key: "A", text: "The underpayment of wages can be ignored as it is a common practice in the industry" },
+            { key: "B", text: "The underpayment of wages should be reported to the relevant authorities, as not paying the minimum wage is legally and morally wrong regardless of the reasoning" },
+            { key: "C", text: "The underpayment of wages can be ignored as there are positive consequences of paying the minimum wage for the job security of the client's employees" },
+            { key: "D", text: "Asha should advise the client not to continue this practice, but should not report it to the authorities as there could be negative consequences for your firm" }
+          ],
+          correct: ["B"],
+          explanation: "Objectivism emphasises adhering to universal, objective moral standards rather than situational factors like industry practices or consequences. Asha has a duty to report the underpayment."
+        },
+        {
+          id: "Q23", lo: "LO 6b", type: "single",
+          question: "Maggie is on secondment in a country where giving large gifts to business partners is common. The local manager says it is essential to secure the contract. Maggie takes a relativist viewpoint.\n\nRequirement: From a relativist viewpoint, how should Maggie respond?",
+          options: [
+            { key: "A", text: "Refuse to take the gift as it would not be considered acceptable based on UK laws and ethical standards" },
+            { key: "B", text: "Accept the practice as a cultural norm and comply with providing the gift to secure the contract" },
+            { key: "C", text: "Accept the practice as there would be a negative consequence for employees if the contract is not secured" },
+            { key: "D", text: "Implement a policy that balances local practices with the company's ethical guidelines" }
+          ],
+          correct: ["B"],
+          explanation: "Relativism bases ethical decisions on the cultural norms and practices relevant in the specific context, even if they differ from one's own standards. Focusing on negative consequences (C) is teleological."
+        },
+        {
+          id: "Q24", lo: "LO 6b", type: "single",
+          question: "During an audit of a company famous for 'corporate giving', Sadiq discovers some charitable donations were actually payments to suppliers. Sadiq applies a deontological approach.\n\nRequirement: What should be Sadiq's response from a deontological perspective?",
+          options: [
+            { key: "A", text: "Overlook the irregularities since the donations are for a good cause" },
+            { key: "B", text: "Report the irregularities, as it is Sadiq's duty to uphold ethical standards regardless of the outcome" },
+            { key: "C", text: "Advise the company to correct the irregularities quietly to avoid public scandal" },
+            { key: "D", text: "Advise the company to increase its charitable donations to offset the irregularities" }
+          ],
+          correct: ["B"],
+          explanation: "Deontological ethics focuses on following ethical duties and principles (honesty, transparency) regardless of the consequences of the action."
+        },
+        {
+          id: "Q25", lo: "LO 6a", type: "multi", selectCount: 2,
+          question: "Rhooves Ltd is a newly established business. The directors want operating policies to be both legal and ethical.\n\nRequirement: Which two of the following policies are likely to be legal but not ethical?",
+          options: [
+            { key: "A", text: "Paying all employees the minimum wage and paying directors an above-average remuneration, including a large bonus" },
+            { key: "B", text: "Requiring all employees to sign zero-hours contracts" },
+            { key: "C", text: "Ensuring hiring policies comply with equality and diversity regulations" },
+            { key: "D", text: "Adopting only certain elements of employee health and safety legislation" }
+          ],
+          correct: ["A", "B"],
+          explanation: "Paying minimum wage alongside large executive bonuses (A) and requiring zero-hours contracts (B) are legal, but society increasingly views them as unethical. Partial health & safety compliance (D) is illegal and unethical."
+        },
+        {
+          id: "Q26", lo: "LO 6b", type: "single",
+          question: "Lecco SrL's finance director proposes closing an unprofitable retail store (making 10 staff redundant) because it will improve overall profitability and secure the jobs of 250 employees in other stores.\n\nRequirement: Which approach to ethics has the finance director applied?",
+          options: [
+            { key: "A", text: "Teleological ethics" },
+            { key: "B", text: "Deontological ethics" },
+            { key: "C", text: "Objectivism" },
+            { key: "D", text: "Relativism" }
+          ],
+          correct: ["A"],
+          explanation: "Teleological ethics considers the consequences of an action (securing 250 jobs) when deciding whether it is right or wrong."
+        },
+        {
+          id: "Q27", lo: "LO 6b", type: "single",
+          question: "Craxxer Ltd's packaging omits a small allergen required by new regulations.\n• Chris: 'Withdraw immediately, issue a notice, and inform regulators—we must deal with it appropriately.'\n• Maisie: 'Regulations change and differ across countries; no need to react immediately.'\n• Yannick: 'Notifying regulators will hurt reputation and sales, affecting the workforce.'\n\nRequirement: Which director has taken a deontological ethics approach?",
+          options: [
+            { key: "A", text: "Chris" },
+            { key: "B", text: "Maisie" },
+            { key: "C", text: "Yannick" },
+            { key: "D", text: "None of the directors" }
+          ],
+          correct: ["A"],
+          explanation: "Chris took a deontological approach (adhering to moral/regulatory duties regardless of consequences). Maisie took a relativist approach, and Yannick took a teleological approach."
+        },
+        {
+          id: "Q28", lo: "LO 6e", type: "multi", selectCount: 2,
+          question: "Which two of the following are functions of a corporate code of ethics?",
+          options: [
+            { key: "A", text: "To provide guidance for the company's employees as to how to act in the course of their work" },
+            { key: "B", text: "To communicate the company's ethical conduct to customers and suppliers" },
+            { key: "C", text: "To provide a 'rule book' that describes how employees should deal with all situations they may face" },
+            { key: "D", text: "To prevent the need for a 'speak up' mechanism to allow employees to raise ethical concerns" },
+            { key: "E", text: "To ensure the company always complies with laws and regulations" }
+          ],
+          correct: ["A", "B"],
+          explanation: "A corporate code of ethics provides guidance to employees (A) and communicates ethical conduct to external parties like customers and suppliers (B). It is not a comprehensive rulebook and cannot guarantee compliance alone."
+        },
+        {
+          id: "Q29a", lo: "LO 6d", type: "single",
+          question: "Tiog Ltd plans to expand its riverside factory. It will improve job security for employees and increase dividends for shareholders, while local residents worry about flooding.\n\nRequirement: Who are the connected stakeholders in the scenario?",
+          options: [
+            { key: "A", text: "Employees" },
+            { key: "B", text: "Shareholders" },
+            { key: "C", text: "Local residents" }
+          ],
+          correct: ["B"],
+          explanation: "Connected stakeholders are those with contractual relationships with the company who are not employees or management (Shareholders)."
+        },
+        {
+          id: "Q29b", lo: "LO 6d", type: "single",
+          question: "Tiog Ltd plans to expand its riverside factory. It will improve job security for employees and increase dividends for shareholders, while local residents worry about flooding.\n\nRequirement: Who are the external stakeholders in the scenario?",
+          options: [
+            { key: "D", text: "Employees" },
+            { key: "E", text: "Shareholders" },
+            { key: "F", text: "Local residents" }
+          ],
+          correct: ["F"],
+          explanation: "External stakeholders are all interested groups who are not internal or connected (Local residents)."
+        },
+        {
+          id: "Q30", lo: "LO 6d", type: "multi", selectCount: 2,
+          question: "Posparo SpA is reducing its product range to focus on profitable items (relocating some employees, benefiting shareholders, affecting customers who rely on the medicines, pleasing local residents with fewer delivery vehicles).\n\nRequirement: Who are the two connected stakeholders in this scenario?",
+          options: [
+            { key: "A", text: "Posparo's employees" },
+            { key: "B", text: "Posparo's shareholders" },
+            { key: "C", text: "Posparo's directors" },
+            { key: "D", text: "Posparo's customers" },
+            { key: "E", text: "Local residents" }
+          ],
+          correct: ["B", "D"],
+          explanation: "Connected stakeholders have contractual relationships with the company other than employees/management: shareholders (B) and customers (D)."
+        },
+        {
+          id: "Q31", lo: "LO 6f", type: "multi", selectCount: 3,
+          question: "Which three of the following are common attributes of a profession?",
+          options: [
+            { key: "A", text: "Open access to membership" },
+            { key: "B", text: "High degree of autonomy" },
+            { key: "C", text: "Self-regulation" },
+            { key: "D", text: "Shared set of core values" },
+            { key: "E", text: "High salaries" }
+          ],
+          correct: ["B", "C", "D"],
+          explanation: "Professions feature a high degree of autonomy (B), self-regulation (C), and a shared set of core values (D). They restrict access to membership (high barrier) and do not necessarily guarantee high salaries."
+        },
+        {
+          id: "Q32a", lo: "LO 6g", type: "single",
+          question: "Eubh is an ICAEW student unsure when she must apply professional ethics.\n\nRequirement: Identify whether Eubh is correct or incorrect:\n'Eubh is a team member in an assurance engagement relating to a sustainability report. Eubh does not believe professional ethics applies in this situation.'",
+          options: [
+            { key: "A", text: "Correct" },
+            { key: "B", text: "Incorrect" }
+          ],
+          correct: ["B"],
+          explanation: "A professional accountant must apply professional ethics in all work undertaken in a professional capacity, including sustainability assurance engagements."
+        },
+        {
+          id: "Q32b", lo: "LO 6g", type: "single",
+          question: "Eubh is an ICAEW student unsure when she must apply professional ethics.\n\nRequirement: Identify whether Eubh is correct or incorrect:\n'Eubh is a treasurer for her local sports club. Eubh does not believe professional ethics applies in this situation.'",
+          options: [
+            { key: "C", text: "Correct" },
+            { key: "D", text: "Incorrect" }
+          ],
+          correct: ["D"],
+          explanation: "A professional accountant must apply professional ethics in all work undertaken in a professional capacity, including voluntary roles such as club treasurer."
+        },
+        {
+          id: "Q33", lo: "LO 6a", type: "single",
+          question: "Joshua is an ICAEW student working as a financial accountant at a petrol-car manufacturer. On weekends, he joins climate change protests.\n\nRequirement: What type of ethics does Joshua apply in joining climate protests?",
+          options: [
+            { key: "A", text: "Personal ethics only" },
+            { key: "B", text: "Professional ethics only" },
+            { key: "C", text: "Both personal and professional ethics" },
+            { key: "D", text: "Neither personal nor professional ethics" }
+          ],
+          correct: ["A"],
+          explanation: "Joining climate protests reflects Joshua's personal ethics only, highlighting a potential ethical tension with his professional role."
+        },
+        {
+          id: "Q34", lo: "LO 6a", type: "single",
+          question: "Virgil (ICAEW member) is instructed by his employer to amend bank funding information to make a forest-destroying project more likely to be funded. As a conservationist, Virgil instead amends it to make funding less likely.\n\nRequirement: Identify whether Virgil's action is justified and why.",
+          options: [
+            { key: "A", text: "No, because Virgil must apply professional ethics and present the information accurately" },
+            { key: "B", text: "No, because Virgil should do what his employer asks without challenging the instruction" },
+            { key: "C", text: "Yes, because Virgil's personal ethics must be prioritised over professional ethics" },
+            { key: "D", text: "Yes, because Virgil's employer was willing to manipulate the information and Virgil has behaved in a similar manner" }
+          ],
+          correct: ["A"],
+          explanation: "Virgil must apply professional ethics in the workplace, present information accurately, and challenge unethical instructions. Professional ethics take precedence in a professional setting."
+        },
+        {
+          id: "Q35", lo: "LO 6f", type: "multi", selectCount: 2,
+          question: "Which two of the following business decisions are consistent with the concept of social responsibility?",
+          options: [
+            { key: "A", text: "Changing to a cheaper supplier which does not adhere to fair trade policies in order to increase profitability" },
+            { key: "B", text: "Allowing employees one day of volunteering leave per annum" },
+            { key: "C", text: "Paying the national minimum wage to all employees" },
+            { key: "D", text: "Implementing health and safety rules that are stricter than those required by law" },
+            { key: "E", text: "Delaying payments to suppliers in order to maintain a healthy bank balance" }
+          ],
+          correct: ["B", "D"],
+          explanation: "Social responsibility expects businesses to positively contribute to society beyond mere legal compliance (minimum wage is just legal compliance). Volunteering leave (B) and stricter health & safety rules (D) go beyond legal minimums."
+        },
+        {
+          id: "Q36", lo: "LO 6a, 6g", type: "multi", selectCount: 2,
+          question: "Identify two reasons why it is important for ICAEW members to apply professional ethics in their work.",
+          options: [
+            { key: "A", text: "To help ensure compliance with laws and regulations" },
+            { key: "B", text: "To improve their prospects of gaining promotion" },
+            { key: "C", text: "To help maintain public trust in the accountancy profession" },
+            { key: "D", text: "To ensure sustainability issues are prioritised over profitability" },
+            { key: "E", text: "To ensure no errors can occur in reporting financial information" }
+          ],
+          correct: ["A", "C"],
+          explanation: "Applying professional ethics helps ensure compliance with laws and regulations (A) and maintains confidence and public trust in the profession (C)."
+        },
+        {
+          id: "Q37", lo: "LO 6g", type: "single",
+          question: "Theo (ICAEW member) works as a management accountant, prepared information for the company's sustainability report, and volunteers as a tennis coach.\n\nRequirement: In which of the following activities must Theo apply professional ethics?\n(1) Preparing budgets and reporting information to management.\n(2) Preparing information for inclusion in the sustainability report.\n(3) Coaching tennis.",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "2 only" },
+            { key: "C", text: "1 and 2 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["C"],
+          explanation: "Theo must apply professional ethics in all professional work (including management accounting and sustainability reporting), but not in coaching tennis since it does not involve professional accountancy skills."
+        },
+        {
+          id: "Q38", lo: "LO 6c", type: "single",
+          question: "Entusio SpA's directors decided to save costs and increase profits by 10% by switching from an ethically sourced leather supplier to one with no ethical sourcing commitments.\n\nRequirement: Which of the following describes this decision?",
+          options: [
+            { key: "A", text: "Legal and ethical" },
+            { key: "B", text: "Legal and unethical" },
+            { key: "C", text: "Illegal and ethical" },
+            { key: "D", text: "Illegal and unethical" }
+          ],
+          correct: ["B"],
+          explanation: "Changing suppliers is legal, but moving away from ethically sourced leather purely to save costs is not an ethical decision."
+        }
+      ],
+
+      c7: [
+        {
+          id: "Q1", lo: "LO 7d", type: "single",
+          question: "Karine is a professional accountant in business assisting a marketing project. She is known for questioning and sometimes doubting the accepted opinions of the professionals she works with.\n\nRequirement: Which characteristic is Karine demonstrating?",
+          options: [
+            { key: "A", text: "Public trust" },
+            { key: "B", text: "Professional integrity" },
+            { key: "C", text: "Public interest" },
+            { key: "D", text: "Professional scepticism" }
+          ],
+          correct: ["D"],
+          explanation: "Professional scepticism is defined as assessing information, estimates and explanations critically, with a questioning mind, and being alert to conditions which may indicate possible misstatements due to error or fraud."
+        },
+        {
+          id: "Q2", lo: "LO 7a, 7g", type: "single",
+          question: "Benji (financial controller at Acme Ltd) is asked by Cecily (finance director) to counter-sign an urgent bank overdraft application immediately. Benji is concerned the application is not accurate.\n\nRequirement: What should Benji do next?",
+          options: [
+            { key: "A", text: "Report the matter to the police for investigation" },
+            { key: "B", text: "Sign the application so that Acme gets the money as soon as possible" },
+            { key: "C", text: "Contact the ICAEW to report Cecily" },
+            { key: "D", text: "Raise the matter with Acme's board of directors" }
+          ],
+          correct: ["D"],
+          explanation: "Benji should apply professional judgement for a proportionate response by consulting internally with those charged with governance (the board). Calling police is disproportionate, signing is unethical, and we do not know if Cecily is an ICAEW member."
+        },
+        {
+          id: "Q3", lo: "LO 7d", type: "single",
+          question: "Alistair notices inconsistent account balances after his client Dandelyon Ltd changed accounting software. The finance director assures him it is nothing to worry about, but Alistair wants to investigate further.\n\nRequirement: What quality is Alistair showing?",
+          options: [
+            { key: "A", text: "Independence" },
+            { key: "B", text: "Professional scepticism" },
+            { key: "C", text: "Professional conduct" },
+            { key: "D", text: "Objectivity" }
+          ],
+          correct: ["B"],
+          explanation: "Alistair is assessing information with a questioning mind and investigating further, demonstrating professional scepticism."
+        },
+        {
+          id: "Q4", lo: "LO 7d", type: "single",
+          question: "Ashima receives bank data for her client Yacky Ltd that disagrees with data given directly by Yacky.\n\nRequirement: Which action demonstrates professional scepticism?",
+          options: [
+            { key: "A", text: "Ashima ignores the data from the bank and uses the data given directly by Yacky" },
+            { key: "B", text: "Ashima uses the bank's data without further comment" },
+            { key: "C", text: "Ashima calls both Yacky and the bank to question the data" },
+            { key: "D", text: "Ashima tells Yacky that she can no longer work for it as it has been dishonest with the data provided" }
+          ],
+          correct: ["C"],
+          explanation: "Ashima should ask questions, challenge the reliability of source information, and investigate further to demonstrate professional scepticism."
+        },
+        {
+          id: "Q5", lo: "LO 7d", type: "single",
+          question: "Three trainee accountants discuss professional judgement:\n• Harry: 'A trainee must still apply their own professional judgement even with less experience.'\n• Francesca: 'If we lack skill/experience for a task, exercising professional judgement means we must still try to do it anyway.'\n• Amaya: 'Professional judgement is required on technical accounting assessments but not other matters.'\n\nRequirement: Which of the colleagues is/are correct?",
+          options: [
+            { key: "A", text: "Harry and Francesca only" },
+            { key: "B", text: "Harry only" },
+            { key: "C", text: "Amaya only" },
+            { key: "D", text: "Francesca and Amaya only" }
+          ],
+          correct: ["B"],
+          explanation: "All accountants, including trainees, must apply professional judgement in all matters (including ethics, not just technical). If lacking skill/experience, they must recognise their limits and seek guidance rather than attempting the task unaided."
+        },
+        {
+          id: "Q6", lo: "LO 7a", type: "single",
+          question: "Matt recruited fitness customers by promising free sports coaching to local schools, then refused to provide it or tell customers. His friend Bella (a professional accountant with a large social media following) considers posting about Matt's decision.\n\nRequirement: Is posting on social media about Matt's decision in the public interest?",
+          options: [
+            { key: "A", text: "No, because Matt's new customers did not expect the coaching to happen" },
+            { key: "B", text: "No, because it is a personal matter for Matt" },
+            { key: "C", text: "Yes, because Matt's decision not to provide the free coaching will impact the local schools" },
+            { key: "D", text: "Yes, because Bella's followers will be interested in this information" }
+          ],
+          correct: ["C"],
+          explanation: "Acting in the public interest means benefiting society as a whole, not what is merely 'interesting' to followers. Highlighting a breach of trust affecting local schools holds Matt accountable and benefits the community."
+        },
+        {
+          id: "Q7", lo: "LO 7b, 7c", type: "single",
+          question: "A board facing a big ethical decision: (1) conducts risk assessment and stakeholder consultation, (2) considers ethical implications against stated values, and (3) weighs risks and benefits of each course of action.\n\nRequirement: Which concept has the board demonstrated?",
+          options: [
+            { key: "A", text: "Transparency" },
+            { key: "B", text: "Professional scepticism" },
+            { key: "C", text: "Good governance" },
+            { key: "D", text: "Public interest" }
+          ],
+          correct: ["C"],
+          explanation: "Good governance is about directing and controlling an organisation to achieve objectives in an acceptable and sustainable manner through risk assessment, consultation, and balanced ethical decision making."
+        },
+        {
+          id: "Q8", lo: "LO 7d", type: "single",
+          question: "Philip doubts management's explanations on the audit of Zipra Ltd and asks his manager for further audit testing due to possible misstatements from error or fraud.\n\nRequirement: What quality is Philip demonstrating?",
+          options: [
+            { key: "A", text: "Professional scepticism" },
+            { key: "B", text: "Independence" },
+            { key: "C", text: "Self-review" },
+            { key: "D", text: "Public interest" }
+          ],
+          correct: ["A"],
+          explanation: "Philip is assessing explanations with a questioning mind and investigating further, demonstrating professional scepticism."
+        },
+        {
+          id: "Q9", lo: "LO 7d", type: "single",
+          question: "Benoit is advising a financially troubled client about a high-interest loan from an unknown lender. He has considered the known facts and circumstances, nature of the lender, and scope of the transaction.\n\nRequirement: To fully exercise professional judgement, what else should Benoit understand?",
+          options: [
+            { key: "A", text: "The interests and relationships involved in the situation" },
+            { key: "B", text: "The effect of his client's problems on the reputation of his accountancy practice" },
+            { key: "C", text: "The public interest" },
+            { key: "D", text: "The level of fee that he can charge his client for the advice" }
+          ],
+          correct: ["A"],
+          explanation: "Professional judgement requires taking into account the facts and circumstances, nature and scope, and the interests and relationships involved."
+        },
+        {
+          id: "Q10", lo: "LO 7d", type: "single",
+          question: "Farah consulted the ICAEW Code of Ethics, her manager, and those charged with governance (TCWG) on a key ethical issue.\n\nRequirement: On whose judgement should Farah ultimately make her decision?",
+          options: [
+            { key: "A", text: "ICAEW's" },
+            { key: "B", text: "Her manager's" },
+            { key: "C", text: "Those charged with governance of Umi" },
+            { key: "D", text: "Her own" }
+          ],
+          correct: ["D"],
+          explanation: "Farah must ultimately apply her own training, professional knowledge, skills and experience to make her decision; consultations only help inform her."
+        },
+        {
+          id: "Q11", lo: "LO 7d", type: "single",
+          question: "Arman makes the following statements about professional judgement:\n(1) It involves relying on the judgement of professional accountants with more knowledge and skills.\n(2) It requires considering the facts of a situation in light of their context to make an informed decision.\n(3) It involves the application of training and experience to professional activities.\n\nRequirement: Which of Arman's statements are true?",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "2 and 3 only" },
+            { key: "C", text: "1 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["B"],
+          explanation: "The individual is ultimately responsible for their own professional judgement and cannot simply rely on others' judgement (though they can consult others to increase their knowledge)."
+        },
+        {
+          id: "Q12", lo: "LO 7b", type: "single",
+          question: "Authorities have charged Laura's client with money laundering and approached Laura for an explanation of her actions and choices regarding her work for the client.\n\nRequirement: What are the authorities seeking from Laura?",
+          options: [
+            { key: "A", text: "Governance" },
+            { key: "B", text: "Professional scepticism" },
+            { key: "C", text: "Accountability" },
+            { key: "D", text: "Public trust" }
+          ],
+          correct: ["C"],
+          explanation: "Accountability means being required to give an account/explanation of one's actions and choices."
+        },
+        {
+          id: "Q13", lo: "LO 7b", type: "single",
+          question: "Just before a final property sale negotiation meeting, Wilhelm learns his client's property was damaged in a serious fire. He starts the meeting by telling the buyer about the fire.\n\nRequirement: What quality has Wilhelm displayed which preserves public trust?",
+          options: [
+            { key: "A", text: "Professional scepticism" },
+            { key: "B", text: "Governance" },
+            { key: "C", text: "Transparency" },
+            { key: "D", text: "Independence" }
+          ],
+          correct: ["C"],
+          explanation: "Wilhelm demonstrated transparency by being open with information, which helps build trust with stakeholders."
+        },
+        {
+          id: "Q14", lo: "LO 7b", type: "single",
+          question: "Gecky Co's board agreed diversity policies that managers must follow when recruiting. Despite urgent demand to hire quickly, managers must still follow these policies.\n\nRequirement: Which concept requires managers to continue following Gecky's diversity policies?",
+          options: [
+            { key: "A", text: "Transparency" },
+            { key: "B", text: "Openness" },
+            { key: "C", text: "Accountability" },
+            { key: "D", text: "Governance" }
+          ],
+          correct: ["D"],
+          explanation: "Governance is the system by which an organisation is directed and controlled so objectives are achieved acceptably and sustainably; diversity policies form part of that governance system."
+        },
+        {
+          id: "Q15", lo: "LO 7b", type: "single",
+          question: "Terry implemented finance policies to align employees with company objectives, has been asked to appear before the audit committee to explain them, and plans to be completely open about his reasoning and consequences.\n\nRequirement: Which concepts are demonstrated in this situation?",
+          options: [
+            { key: "A", text: "Governance and transparency only" },
+            { key: "B", text: "Transparency and accountability only" },
+            { key: "C", text: "Governance and accountability only" },
+            { key: "D", text: "Governance, transparency and accountability" }
+          ],
+          correct: ["D"],
+          explanation: "The policies represent governance, being open about reasoning/consequences represents transparency, and appearing before the audit committee to explain them represents accountability."
+        },
+        {
+          id: "Q16", lo: "LO 7c", type: "single",
+          question: "Percut Ltd's management asks whether demonstrating ethical governance will benefit the company's decision making.\n\nRequirement: Will ethical governance be of benefit to Percut's decision making and why?",
+          options: [
+            { key: "A", text: "Yes, as decisions will be made more quickly" },
+            { key: "B", text: "Yes, as decision making will be more transparent" },
+            { key: "C", text: "No, as individuals will not be held accountable for their decisions" },
+            { key: "D", text: "No, as decisions will prioritise the maximisation of shareholder wealth" }
+          ],
+          correct: ["B"],
+          explanation: "Ethical governance ensures more transparent decision making and individual accountability while considering all stakeholders' interests (it is not intended to speed up decisions)."
+        },
+        {
+          id: "Q17", lo: "LO 7e", type: "single",
+          question: "Eilidh (Head of HR) selects interview candidates who graduated from the same university she attended, regardless of their qualifications and experience.\n\nRequirement: Which type of cognitive bias has Eilidh demonstrated?",
+          options: [
+            { key: "A", text: "Framing bias" },
+            { key: "B", text: "Anchoring bias" },
+            { key: "C", text: "Affinity bias" },
+            { key: "D", text: "Availability bias" }
+          ],
+          correct: ["C"],
+          explanation: "Affinity bias occurs when someone favours others who share similar characteristics or backgrounds (e.g., same university)."
+        },
+        {
+          id: "Q18", lo: "LO 7e", type: "single",
+          question: "Kendal intends to award an annual £1,000 bonus to Zainab because Zainab helped resolve a major supply-chain issue two weeks ago and Kendal remembers it clearly.\n\nRequirement: Which type of cognitive bias has Kendal demonstrated?",
+          options: [
+            { key: "A", text: "Affinity bias" },
+            { key: "B", text: "Availability bias" },
+            { key: "C", text: "Anchoring bias" },
+            { key: "D", text: "Confirmation bias" }
+          ],
+          correct: ["B"],
+          explanation: "Availability bias happens when people make decisions based on the most readily available or memorable information rather than all relevant information."
+        },
+        {
+          id: "Q19", lo: "LO 7e", type: "single",
+          question: "Knowing last year's cash budget was accurate, Jas sets the 20X6 cash budget at the same level despite knowing about a large expected cash purchase of machinery in 20X6.\n\nRequirement: Which type of cognitive bias has Jas demonstrated?",
+          options: [
+            { key: "A", text: "Affinity bias" },
+            { key: "B", text: "Anchoring bias" },
+            { key: "C", text: "Availability bias" },
+            { key: "D", text: "Framing bias" }
+          ],
+          correct: ["B"],
+          explanation: "Anchoring bias occurs when someone relies too heavily on an initial reference point (last year's budget) and fails to adjust for new information."
+        },
+        {
+          id: "Q20", lo: "LO 7f", type: "single",
+          question: "Jax (an ICAEW student member in practice) intentionally miscoded time on his timesheet to the wrong client on his manager's instruction.\n\nRequirement: Are there potential consequences for Jax in this situation?",
+          options: [
+            { key: "A", text: "No, because Jax was acting on the instruction of his manager" },
+            { key: "B", text: "No, because Jax is a student" },
+            { key: "C", text: "Yes, because Jax may face disciplinary action and loss of reputation" },
+            { key: "D", text: "Yes, because Jax may face increased regulatory inspections from the FRC" }
+          ],
+          correct: ["C"],
+          explanation: "ICAEW students must uphold integrity regardless of superiors' instructions. Dishonesty can lead to ICAEW disciplinary action and reputational damage. FRC inspections affect firms, not individuals."
+        },
+        {
+          id: "Q21a", lo: "LO 7f", type: "single",
+          question: "A senior manager at SKP was negligent on an audit, leaving a major fraud undetected, and it was widely reported in the media.\n\nRequirement: Identify whether the following statement is true or false:\n'The wider accountancy profession will not be negatively impacted as this is the action of just one manager.'",
+          options: [
+            { key: "A", text: "True" },
+            { key: "B", text: "False" }
+          ],
+          correct: ["B"],
+          explanation: "The wider accountancy profession suffers reputational damage and loss of credibility even when misconduct is by just one manager."
+        },
+        {
+          id: "Q21b", lo: "LO 7f", type: "single",
+          question: "A senior manager at SKP was negligent on an audit, leaving a major fraud undetected, and it was widely reported in the media.\n\nRequirement: Identify whether the following statement is true or false:\n'The wider public will not have lost faith in the profession as they are unlikely to have been personally affected.'",
+          options: [
+            { key: "C", text: "True" },
+            { key: "D", text: "False" }
+          ],
+          correct: ["D"],
+          explanation: "Wide media coverage causes the wider public to lose faith in the accountancy profession and capital markets, regardless of personal impact."
+        },
+        {
+          id: "Q21c", lo: "LO 7f", type: "single",
+          question: "A senior manager at SKP was negligent on an audit, leaving a major fraud undetected, and it was widely reported in the media.\n\nRequirement: Identify whether the following statement is true or false:\n'The individual manager responsible for the audit of Quercia will not suffer any consequences as they were employed by SKP.'",
+          options: [
+            { key: "E", text: "True" },
+            { key: "F", text: "False" }
+          ],
+          correct: ["F"],
+          explanation: "The individual manager may suffer personal consequences (disciplinary action, dismissal, etc.) and is not shielded by being an employee of SKP."
+        },
+        {
+          id: "Q22", lo: "LO 7f, 7g", type: "single",
+          question: "Jens (ICAEW Chartered Accountant) signs as a witness on his neighbour Ken's house sale contract even though he was not present when Ken signed it. It is reported to ICAEW.\n\nRequirement: Which consequence may Jens face from ICAEW?",
+          options: [
+            { key: "A", text: "Jens would be unlikely to face any consequences from ICAEW as it is unrelated to his professional activities" },
+            { key: "B", text: "Jens would be likely to be reprimanded by ICAEW for carelessness. He is unlikely to receive any other punishment" },
+            { key: "C", text: "Jens might be reprimanded by ICAEW for failing to show integrity. He could also be fined" },
+            { key: "D", text: "Jens would be unlikely to face any consequences from ICAEW as the matter relates to fraud and would be referred to the relevant authorities to investigate" }
+          ],
+          correct: ["C"],
+          explanation: "ICAEW members must conduct themselves appropriately in private life as well as professional work. Dishonestly signing as a witness is misconduct failing integrity and can lead to a reprimand and fine."
+        },
+        {
+          id: "Q23", lo: "LO 7f, 7g", type: "single",
+          question: "A partner at AGN (an ICAEW member firm) disclosed client information to a friend, breaching the Code of Ethics.\n\nRequirement: What sanctions can ICAEW impose on AGN (the firm)?\n(1) Removal of Practising Certificate\n(2) Financial penalties\n(3) Severe reprimand",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "1 and 3 only" },
+            { key: "C", text: "2 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["C"],
+          explanation: "ICAEW can impose financial penalties and a severe reprimand on a firm (and withdraw licences/designations). A Practising Certificate is held by an individual, not the firm."
+        },
+        {
+          id: "Q24", lo: "LO 7h", type: "single",
+          question: "A code of ethics may be rules-based or principles-based.\n\nRequirement: Which of the following is a key feature of a rules-based approach to ethics?",
+          options: [
+            { key: "A", text: "It allows for flexibility and professional judgement in ethical decision making" },
+            { key: "B", text: "It is based on a framework of broad principles that guide behaviour" },
+            { key: "C", text: "It provides clear guidelines as to what is permissible and what is forbidden" },
+            { key: "D", text: "It encourages professional accountants to consider the spirit of the law rather than just the letter of the law" }
+          ],
+          correct: ["C"],
+          explanation: "A rules-based approach provides clear guidance on what is permissible and forbidden, making it easy to follow and enforce."
+        },
+        {
+          id: "Q25", lo: "LO 7h", type: "single",
+          question: "The ICAEW Code of Ethics is a principles-based code.\n\nRequirement: Which of the following best describes a principles-based approach?",
+          options: [
+            { key: "A", text: "It relies on detailed and specific guidance to influence ethical behaviour" },
+            { key: "B", text: "It encourages critical thinking to demonstrate a considered and informed approach to determining an ethical outcome" },
+            { key: "C", text: "It provides a comprehensive list of what an accountant should and should not do" },
+            { key: "D", text: "It is easily enforceable as it provides clear guidelines to be followed" }
+          ],
+          correct: ["B"],
+          explanation: "A principles-based approach encourages active engagement and critical thinking to demonstrate how the principles were considered to reach an ethical outcome."
+        },
+        {
+          id: "Q26", lo: "LO 7h", type: "single",
+          question: "What is an advantage of a principles-based code of ethics compared to a rules-based code in the accountancy profession?",
+          options: [
+            { key: "A", text: "It provides a set of clear and specific actions for identified ethical scenarios" },
+            { key: "B", text: "It allows for greater flexibility and professional judgement to be applied in complex situations" },
+            { key: "C", text: "It is easier for the professional body to enforce regulations" },
+            { key: "D", text: "It minimises the need for interpretation and judgement by accountants which improves ethical decision making" }
+          ],
+          correct: ["B"],
+          explanation: "A principles-based code promotes flexibility and allows professional judgement to be applied to complex, individual situations rather than following a rigid checklist."
+        },
+        {
+          id: "Q27", lo: "LO 7a", type: "single",
+          question: "Extract from Phastic plc's finance handbook:\n• Professional accountants should demonstrate strong ethical values and an enquiring mindset.\n• Professional accountants have an overriding duty to the public interest.\n\nRequirement: What important concept for the accounting profession is supported by the handbook?",
+          options: [
+            { key: "A", text: "Independence" },
+            { key: "B", text: "Public trust" },
+            { key: "C", text: "Public scrutiny" },
+            { key: "D", text: "Confidentiality" }
+          ],
+          correct: ["B"],
+          explanation: "An overriding duty to the public interest, strong ethical values, and a questioning mindset all support public trust in professional accountants."
+        },
+        {
+          id: "Q28", lo: "LO 7a", type: "single",
+          question: "Digby makes the following statements about the accounting profession:\n(1) Professional accountants have a duty to further the public interest.\n(2) The overriding duty of a professional accountant is to their client.\n(3) The accountancy profession must adapt to public perceptions of ethics to retain public trust.\n\nRequirement: Which of Digby's statements are true?",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "1 and 3 only" },
+            { key: "C", text: "2 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["B"],
+          explanation: "Accountants have an overriding duty to the public interest (which may conflict with a client/employer), and the profession must adapt to changing public perceptions to retain public trust."
+        },
+        {
+          id: "Q29a", lo: "LO 7i", type: "single",
+          question: "The ICAEW Code of Ethics is based on the IESBA Code of Ethics with additions relevant to ICAEW members.\n\nRequirement: Identify whether the following statement is true or false:\n'ICAEW students are not bound by the ICAEW Code of Ethics as it applies to members only.'",
+          options: [
+            { key: "A", text: "True" },
+            { key: "B", text: "False" }
+          ],
+          correct: ["B"],
+          explanation: "The ICAEW Code of Ethics applies to all ICAEW members, students, affiliates and firms."
+        },
+        {
+          id: "Q29b", lo: "LO 7i", type: "single",
+          question: "The ICAEW Code of Ethics is based on the IESBA Code of Ethics with additions relevant to ICAEW members.\n\nRequirement: Identify whether the following statement is true or false:\n'The ICAEW Code of Ethics applies only to paid professional work.'",
+          options: [
+            { key: "C", text: "True" },
+            { key: "D", text: "False" }
+          ],
+          correct: ["D"],
+          explanation: "The ICAEW Code of Ethics applies to all aspects of professional work, whether paid or voluntary."
+        },
+        {
+          id: "Q30", lo: "LO 7i", type: "multi", selectCount: 2,
+          question: "The IESBA Code of Ethics contains five fundamental principles.\n\nRequirement: Which two of the following are fundamental principles?",
+          options: [
+            { key: "A", text: "Integrity" },
+            { key: "B", text: "Accountability" },
+            { key: "C", text: "Confidentiality" },
+            { key: "D", text: "Transparency" },
+            { key: "E", text: "Independence" }
+          ],
+          correct: ["A", "C"],
+          explanation: "Integrity (A) and Confidentiality (C) are fundamental principles (along with Objectivity, Professional Competence & Due Care, and Professional Behaviour). Accountability, transparency, and independence are qualities, not fundamental principles."
+        },
+        {
+          id: "Q31", lo: "LO 7i", type: "single",
+          question: "Which of the following statements regarding the FRC Ethical Standard is true?",
+          options: [
+            { key: "A", text: "It applies only to audit engagements" },
+            { key: "B", text: "It applies to firms and partners involved in audit and assurance engagements but not to individuals performing the engagements" },
+            { key: "C", text: "It identifies key ethical safeguards which can be implemented, including the appointment of an ethics partner" },
+            { key: "D", text: "Its overarching principle is that the confidentiality of clients should be maintained at all costs" }
+          ],
+          correct: ["C"],
+          explanation: "The FRC Ethical Standard applies to firms, partners, and staff on audit and public interest assurance engagements; its overarching principles are integrity and objectivity, and it identifies safeguards like appointing an ethics partner."
+        },
+        {
+          id: "Q32", lo: "LO 7d", type: "single",
+          question: "Three trainees discuss professional scepticism:\n• Charis: 'If management is trustworthy, you can rely on what they say without verification.'\n• Kola: 'Professional scepticism means we must question unusual transactions.'\n• Frankie: 'We must assume every client is dishonest until proven otherwise.'\n\nRequirement: Which colleague, if any, is correct?",
+          options: [
+            { key: "A", text: "Charis" },
+            { key: "B", text: "Kola" },
+            { key: "C", text: "Frankie" },
+            { key: "D", text: "None of the colleagues" }
+          ],
+          correct: ["B"],
+          explanation: "Kola is correct: professional scepticism means critically assessing information and questioning unusual transactions. Charis lacks verification and Frankie is overly cynical."
+        },
+        {
+          id: "Q33", lo: "LO 7e", type: "single",
+          question: "A sales manager suggests using last year's revenue targets as a base, despite market research indicating a significant shift in consumer behaviour.\n\nRequirement: What cognitive bias does the sales manager exhibit?",
+          options: [
+            { key: "A", text: "Anchoring bias" },
+            { key: "B", text: "Automation bias" },
+            { key: "C", text: "Recency bias" },
+            { key: "D", text: "Survivorship bias" }
+          ],
+          correct: ["A"],
+          explanation: "Anchoring bias occurs when a decision maker relies too heavily on an initial piece of information (last year's targets) without adjusting sufficiently for new data."
+        },
+        {
+          id: "Q34", lo: "LO 7a", type: "single",
+          question: "Which of the following actions of a professional accountant working for Tedster Ltd is consistent with acting in the public interest?",
+          options: [
+            { key: "A", text: "Donating a proportion of sales from one of Tedster's products to charity" },
+            { key: "B", text: "Prioritising increasing Tedster's sales revenue above all else" },
+            { key: "C", text: "Using confidential information obtained in their role for personal benefit" },
+            { key: "D", text: "Ignoring Tedster's minor regulatory breaches to save costs" }
+          ],
+          correct: ["A"],
+          explanation: "Introducing a charitable giving scheme benefits society as a whole, aligning with acting in the public interest."
+        },
+        {
+          id: "Q35", lo: "LO 7a", type: "multi", selectCount: 2,
+          question: "Which two of the following actions by a professional accountant are consistent with maintaining public trust?",
+          options: [
+            { key: "A", text: "Insisting that a client corrects financial reporting discrepancies despite pressure from management" },
+            { key: "B", text: "Adjusting financial statements to meet the expectations of major shareholders" },
+            { key: "C", text: "Disclosing information about regulatory breaches to relevant authorities" },
+            { key: "D", text: "Taking decisions which increase their likelihood of receiving a bonus" },
+            { key: "E", text: "Ignoring a fraudulent expense claim submitted by a colleague who is also a close friend" }
+          ],
+          correct: ["A", "C"],
+          explanation: "Insisting on correcting financial discrepancies (A) ensures accurate reporting, and disclosing regulatory breaches (C) promotes accountability—both maintain public trust."
+        },
+        {
+          id: "Q36", lo: "LO 7a", type: "single",
+          question: "Which of the following actions by a company is consistent with furthering the public interest and maintaining trust?",
+          options: [
+            { key: "A", text: "Only accepting new projects that increase profits for shareholders" },
+            { key: "B", text: "Prioritising efforts that increase the likelihood of senior management meeting their bonus targets" },
+            { key: "C", text: "Enhancing transparency in the decision-making processes to increase ethical governance" },
+            { key: "D", text: "Reducing compliance checks to ensure faster decision making" }
+          ],
+          correct: ["C"],
+          explanation: "Transparency in decision making builds public trust by allowing stakeholders to see decisions are made fairly and in the public interest."
+        },
+        {
+          id: "Q37", lo: "LO 7a", type: "multi", selectCount: 2,
+          question: "Pershell Ltd emphasises serving the public interest and preserving public trust.\n\nRequirement: Which two proposals align with Pershell's values?",
+          options: [
+            { key: "A", text: "Introducing a programme to donate sports equipment to local schools" },
+            { key: "B", text: "Reducing benefits offered to employees to align the company with competitors" },
+            { key: "C", text: "Not reporting a potential fraud by a former employee to avoid public scrutiny" },
+            { key: "D", text: "Publishing detailed sustainability reports on the company's environmental impact" },
+            { key: "E", text: "Changing waste management practices and putting more waste into landfill to reduce costs" }
+          ],
+          correct: ["A", "D"],
+          explanation: "Donating sports equipment to schools (A) benefits society (public interest), and publishing detailed sustainability reports (D) increases transparency (public trust)."
+        },
+        {
+          id: "Q38", lo: "LO 7a", type: "single",
+          question: "Lisa's client Cyban Ltd plans to ignore environmental protection regulations for a profitable construction project. Lisa raised it with the board and audit committee, but they insist on proceeding.\n\nRequirement: Which action should Lisa take next to protect the public interest?",
+          options: [
+            { key: "A", text: "Ignore the issue to maintain her client's trust and maintain the business relationship" },
+            { key: "B", text: "Advise Cyban to proceed, but document her disagreement in private records" },
+            { key: "C", text: "Report the matter to the relevant authorities so that it can be investigated" },
+            { key: "D", text: "Undertake a risk assessment on behalf of Cyban and make a decision based on its findings" }
+          ],
+          correct: ["C"],
+          explanation: "Reporting the matter to the relevant authorities demonstrates Lisa's commitment to protecting the public interest when internal escalation fails."
+        },
+        {
+          id: "Q39", lo: "LO 7b", type: "multi", selectCount: 3,
+          question: "Rashid sits on the board of VagaBoom Ltd deciding on a manufacturing facility expansion.\n\nRequirement: Which three actions demonstrate ethical governance in decision making?",
+          options: [
+            { key: "A", text: "Considering the impact on the bonuses of the directors" },
+            { key: "B", text: "Ensuring all necessary regulation and compliance checks are performed before proceeding" },
+            { key: "C", text: "Considering the impact of the investment on the local community" },
+            { key: "D", text: "Signing an agreement to limit the responsibility of the directors for the outcome of the expansion" },
+            { key: "E", text: "Engaging with employees to promote transparency in the decision-making process" }
+          ],
+          correct: ["B", "C", "E"],
+          explanation: "Ethical governance includes compliance checks (B), considering community impact (C), and engaging employees for transparency (E). Director bonuses (A) and limiting responsibility (D) do not demonstrate ethical governance."
+        },
+        {
+          id: "Q40", lo: "LO 7d", type: "single",
+          question: "Three trainees discuss professional judgement:\n• Gaia: 'Relying on the previous experience of managers to make a decision.'\n• Laurent: 'Consulting external experts and following their advice without personal assessment.'\n• Malika: 'Taking known facts and circumstances, nature and scope of the situation, and interests and relationships involved into account.'\n\nRequirement: Which colleague is correct?",
+          options: [
+            { key: "A", text: "Gaia" },
+            { key: "B", text: "Laurent" },
+            { key: "C", text: "Malika" },
+            { key: "D", text: "None of the colleagues" }
+          ],
+          correct: ["C"],
+          explanation: "Malika is correct: professional judgement requires evaluating facts and circumstances, nature and scope, and interests and relationships—not blindly relying on managers or external experts."
+        },
+        {
+          id: "Q41", lo: "LO 7d", type: "single",
+          question: "Harvey notices unusually high Q4 revenue at his audit client Uise Ltd. The client blames a surge in demand, but Harvey does not accept this explanation and decides to investigate sales records further.\n\nRequirement: What is Harvey demonstrating?",
+          options: [
+            { key: "A", text: "Accountability" },
+            { key: "B", text: "Professional scepticism" },
+            { key: "C", text: "Good governance" },
+            { key: "D", text: "Regulatory compliance" }
+          ],
+          correct: ["B"],
+          explanation: "Harvey applied a questioning mind and investigated further, demonstrating professional scepticism."
+        },
+        {
+          id: "Q42a", lo: "LO 7e", type: "single",
+          question: "Trusky BV employees and cognitive bias:\nZayn, a hiring manager, always selects candidates who graduated from the same university as him, despite better-qualified candidates.\n\nRequirement: Which type of bias has Zayn demonstrated?",
+          options: [
+            { key: "A", text: "Affinity bias" },
+            { key: "B", text: "Availability bias" },
+            { key: "C", text: "Rush to solve bias" }
+          ],
+          correct: ["A"],
+          explanation: "Zayn demonstrates affinity bias by favouring candidates who share a similar background (same university)."
+        },
+        {
+          id: "Q42b", lo: "LO 7e", type: "single",
+          question: "Trusky BV employees and cognitive bias:\nSyed, a project manager, assigns tasks based on his memory of who recently performed similar tasks rather than their skillsets.\n\nRequirement: Which type of bias has Syed demonstrated?",
+          options: [
+            { key: "D", text: "Affinity bias" },
+            { key: "E", text: "Availability bias" },
+            { key: "F", text: "Rush to solve bias" }
+          ],
+          correct: ["E"],
+          explanation: "Availability bias occurs when decisions are influenced by the most readily available or memorable information rather than all relevant information."
+        },
+        {
+          id: "Q42c", lo: "LO 7e", type: "single",
+          question: "Trusky BV employees and cognitive bias:\nKayleigh, a team leader, made a decision before going on annual leave without thinking through the consequences.\n\nRequirement: Which type of bias has Kayleigh demonstrated?",
+          options: [
+            { key: "G", text: "Affinity bias" },
+            { key: "H", text: "Availability bias" },
+            { key: "I", text: "Rush to solve bias" }
+          ],
+          correct: ["I"],
+          explanation: "Rush to solve bias occurs when people quickly jump to a solution without thoroughly understanding the problem or consequences."
+        },
+        {
+          id: "Q43", lo: "LO 7e", type: "single",
+          question: "Which behaviour in the workplace demonstrates framing bias?",
+          options: [
+            { key: "A", text: "Deepa allocates work to team members based on their performance in the most recent project" },
+            { key: "B", text: "Shaun seeks information from external experts that align with his expectations" },
+            { key: "C", text: "Trey makes decisions based on positive information presented to him rather than based on balanced information" },
+            { key: "D", text: "Ayaan gives higher performance gradings to team members she socialises with, despite their actual performance levels" }
+          ],
+          correct: ["C"],
+          explanation: "Framing bias occurs when decisions are based on how information is presented (positive framing) rather than balanced content. Deepa = availability, Shaun = confirmation, Ayaan = affinity."
+        },
+        {
+          id: "Q44", lo: "LO 7a", type: "single",
+          question: "Which of the following should be demonstrated by professional accountants in order to act in the public interest?\n(1) Ethical values\n(2) An overriding duty to their employers\n(3) A questioning mindset",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "2 and 3 only" },
+            { key: "C", text: "1 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["C"],
+          explanation: "Acting in the public interest requires ethical values and a questioning mindset; it may sometimes require acting against an employer's interest (e.g., whistleblowing)."
+        },
+        {
+          id: "Q45", lo: "LO 7e", type: "single",
+          question: "Which of the following scenarios illustrates confirmation bias?\n(1) A project manager only considers reports agreeing with her original timeline and dismisses reports indicating potential delays.\n(2) An HR manager regularly updates policies to comply with new laws.\n(3) A financial accountant asks her manager to double-check entries for year-end audit.",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "1 and 3 only" },
+            { key: "C", text: "2 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["A"],
+          explanation: "The project manager demonstrates confirmation bias by selectively focusing on information that confirms her belief while disregarding contradictory data."
+        },
+        {
+          id: "Q46", lo: "LO 7e", type: "multi", selectCount: 2,
+          question: "Needing to leave work on time, James is asked for an urgent supplier recommendation. With little experience, he quickly recommends the supplier he remembers from last month's contract and leaves.\n\nRequirement: Which two cognitive biases has James demonstrated?",
+          options: [
+            { key: "A", text: "Confirmation bias" },
+            { key: "B", text: "Availability bias" },
+            { key: "C", text: "Affinity bias" },
+            { key: "D", text: "Framing bias" },
+            { key: "E", text: "Rush to solve bias" }
+          ],
+          correct: ["B", "E"],
+          explanation: "James showed rush to solve bias (E) by jumping to an answer under time pressure, and availability bias (B) by relying on the most memorable supplier from last month."
+        },
+        {
+          id: "Q47", lo: "LO 7f", type: "single",
+          question: "Pranav (an ICAEW member) was involved in a financial fraud scheme at his company. Potential consequences listed:\n(1) Being dismissed from his role.\n(2) Legal consequences.\n(3) Disciplinary action from ICAEW.\n(4) Loss of licences to practice.\n\nRequirement: Which potential consequences might Pranav suffer as an individual?",
+          options: [
+            { key: "A", text: "1 only" },
+            { key: "B", text: "1 and 3 only" },
+            { key: "C", text: "1, 2 and 3 only" },
+            { key: "D", text: "2, 3 and 4 only" }
+          ],
+          correct: ["C"],
+          explanation: "Pranav can face dismissal (1), legal consequences (2), and ICAEW disciplinary action (3). Licences to practise/audit apply to firms, whereas an individual holds a Practising Certificate."
+        },
+        {
+          id: "Q48", lo: "LO 7f", type: "single",
+          question: "Three ICAEW students discuss regulations:\n• Joel: 'The ICAEW Code of Ethics does not apply until we pass all ACA exams.'\n• Olivia: 'Making racist comments on personal social media may result in ICAEW disciplinary action.'\n• Emilia: 'Cheating in ACA exams will not result in ICAEW disciplinary procedures.'\n\nRequirement: Which student(s) is/are correct?",
+          options: [
+            { key: "A", text: "Joel only" },
+            { key: "B", text: "Joel and Emilia only" },
+            { key: "C", text: "Olivia only" },
+            { key: "D", text: "Olivia and Emilia only" }
+          ],
+          correct: ["C"],
+          explanation: "The Code applies immediately upon student registration (Joel is wrong). Cheating in exams triggers serious disciplinary action (Emilia is wrong). Misconduct in personal life like racist comments on social media is subject to ICAEW disciplinary action (Olivia is correct)."
+        },
+        {
+          id: "Q49", lo: "LO 7f", type: "single",
+          question: "Clara (financial controller) manipulated financial statements to show higher revenue and profits.\n\nRequirement: Which is a potential consequence for Clara as an individual accountant?",
+          options: [
+            { key: "A", text: "Reduction in company value" },
+            { key: "B", text: "Creation of a toxic work environment" },
+            { key: "C", text: "Loss of stakeholder trust" },
+            { key: "D", text: "Fines and imprisonment" }
+          ],
+          correct: ["D"],
+          explanation: "Fines and imprisonment (D) are personal consequences for Clara; the other options are consequences for the company."
+        },
+        {
+          id: "Q50", lo: "LO 7f", type: "single",
+          question: "Albanch BV (a clothing retailer) used misleading advertising to promote sustainability credentials of its products.\n\nRequirement: Which consequence will Albanch face?",
+          options: [
+            { key: "A", text: "Increased revenue due to the publicity received" },
+            { key: "B", text: "Reduced company value due to reputational damage" },
+            { key: "C", text: "Reduced employee turnover rates" },
+            { key: "D", text: "Disciplinary action from ICAEW" }
+          ],
+          correct: ["B"],
+          explanation: "Misleading stakeholders leads to reputational damage, loss of custom, and reduced company value (B). ICAEW cannot discipline a clothing retailer."
+        },
+        {
+          id: "Q51", lo: "LO 7f", type: "multi", selectCount: 2,
+          question: "Mach & Anders (a prominent accountancy firm) was found guilty of manipulating financial statements for a major client, widely reported in the media.\n\nRequirement: Which two are likely consequences for the wider accountancy profession?",
+          options: [
+            { key: "A", text: "Loss of public trust" },
+            { key: "B", text: "Decrease in value" },
+            { key: "C", text: "Increased regulatory scrutiny" },
+            { key: "D", text: "Legal consequences" },
+            { key: "E", text: "Loss of clients" }
+          ],
+          correct: ["A", "C"],
+          explanation: "The wider accountancy profession suffers loss of public trust (A) and increased regulatory scrutiny (C). Decrease in value, legal consequences, and loss of clients apply to Mach & Anders specifically."
+        },
+        {
+          id: "Q52", lo: "LO 7f", type: "single",
+          question: "Coll & Harris deliberately ignored audit discrepancies at Vect plc, inflating profits; Vect's share price later plunged.\n\nRequirement: What is the primary consequence on the public as a whole?",
+          options: [
+            { key: "A", text: "Financial losses" },
+            { key: "B", text: "Loss of faith in the accountancy profession" },
+            { key: "C", text: "Damage to credibility" },
+            { key: "D", text: "More regulatory oversight" }
+          ],
+          correct: ["B"],
+          explanation: "The public as a whole suffers a loss of faith in the accountancy profession (B). Only individual investors suffer financial losses, while C and D are consequences for the profession."
+        },
+        {
+          id: "Q53", lo: "LO 7g", type: "multi", selectCount: 2,
+          question: "ICAEW is the primary regulator of its members.\n\nRequirement: Which two of the following does ICAEW have direct responsibility for?",
+          options: [
+            { key: "A", text: "Providing training to its members" },
+            { key: "B", text: "Setting the entry requirements for membership" },
+            { key: "C", text: "Setting fee levels that members charge for their services" },
+            { key: "D", text: "Dealing with professional misconduct by members" },
+            { key: "E", text: "Providing legal services to members" }
+          ],
+          correct: ["B", "D"],
+          explanation: "ICAEW is directly responsible for setting membership entry requirements (B) and dealing with professional misconduct (D). It does not set fees or provide legal services."
+        },
+        {
+          id: "Q54", lo: "LO 7g", type: "single",
+          question: "Alexandra (ICAEW member working in business) deliberately manipulated her employer's financial statements to meet bank loan conditions.\n\nRequirement: Would ICAEW take disciplinary action against Alexandra?",
+          options: [
+            { key: "A", text: "No, because disciplinary action is only relevant to accountants working in public practice not in business" },
+            { key: "B", text: "Yes, and it could result in a legal conviction for Alexandra" },
+            { key: "C", text: "Yes, and she could be excluded from ICAEW membership either permanently or for a specified period" },
+            { key: "D", text: "Yes, her Practising Certificate could be removed" }
+          ],
+          correct: ["C"],
+          explanation: "ICAEW can discipline members in business or practice and exclude them from membership (C). ICAEW cannot issue legal convictions, and Alexandra (in business) does not hold a Practising Certificate."
+        },
+        {
+          id: "Q55", lo: "LO 7g", type: "multi", selectCount: 2,
+          question: "Francesca is a newly qualified ICAEW member working as a financial accountant in a manufacturing company.\n\nRequirement: Which two of the following must Francesca demonstrate to abide by ICAEW regulations and codes?",
+          options: [
+            { key: "A", text: "Train her colleagues on ICAEW anti-money laundering regulations" },
+            { key: "B", text: "Hold a Practising Certificate" },
+            { key: "C", text: "Undertake continuing professional development (CPD)" },
+            { key: "D", text: "Comply with the ICAEW Code of Ethics" },
+            { key: "E", text: "Pass an annual examination to prove her technical competence" }
+          ],
+          correct: ["C", "D"],
+          explanation: "Francesca must undertake CPD (C) and comply with the ICAEW Code of Ethics (D). A Practising Certificate is only for public practice, and there is no annual exam."
+        },
+        {
+          id: "Q56", lo: "LO 7g", type: "single",
+          question: "Biden & Khan (ICAEW member firm) failed to comply with anti-money laundering regulations.\n\nRequirement: Which of the following penalties is NOT a potential action ICAEW could impose?",
+          options: [
+            { key: "A", text: "Prohibiting the firm from using the description 'chartered accountants'" },
+            { key: "B", text: "Imposing a financial penalty on the firm in the form of fines" },
+            { key: "C", text: "Withdrawing licences granted to the firm by ICAEW" },
+            { key: "D", text: "Reducing the firm's audit fees to limit the profit margins of the firm" }
+          ],
+          correct: ["D"],
+          explanation: "ICAEW cannot influence or reduce the audit fees charged by its member firms."
+        },
+        {
+          id: "Q57a", lo: "LO 7g", type: "single",
+          question: "Duty to report colleagues (all ICAEW members) to ICAEW:\nAndrew provided confidential client information to his friend, though the friend did not act on it.\n\nRequirement: Is there a duty to report?",
+          options: [
+            { key: "A", text: "Duty to report" },
+            { key: "B", text: "No duty to report" }
+          ],
+          correct: ["A"],
+          explanation: "There is a duty to report because Andrew breached the Code of Ethics (confidentiality); it is irrelevant that his friend did not act on it."
+        },
+        {
+          id: "Q57b", lo: "LO 7g", type: "single",
+          question: "Duty to report colleagues (all ICAEW members) to ICAEW:\nMacy has consistently been late to work for the past few months and her manager took no action.\n\nRequirement: Is there a duty to report?",
+          options: [
+            { key: "C", text: "Duty to report" },
+            { key: "D", text: "No duty to report" }
+          ],
+          correct: ["D"],
+          explanation: "Being late to work does not breach the Code of Ethics; it is an internal performance management matter, so there is no duty to report to ICAEW."
+        },
+        {
+          id: "Q57c", lo: "LO 7g", type: "single",
+          question: "Duty to report colleagues (all ICAEW members) to ICAEW:\nAnas has been falsifying his timesheet.\n\nRequirement: Is there a duty to report?",
+          options: [
+            { key: "E", text: "Duty to report" },
+            { key: "F", text: "No duty to report" }
+          ],
+          correct: ["E"],
+          explanation: "There is a duty to report whenever an ICAEW member becomes aware someone else may be liable to ICAEW disciplinary action (falsifying timesheets breaches integrity)."
+        },
+        {
+          id: "Q58a", lo: "LO 7g", type: "single",
+          question: "Vance, Mills and Aanwar (VMA), an ICAEW member firm, is accused of breaching confidentiality and misconduct.\n\nRequirement: Identify whether this action may be taken by ICAEW:\n'ICAEW may withdraw VMA's licence to practise as chartered accountants.'",
+          options: [
+            { key: "A", text: "May be taken" },
+            { key: "B", text: "May not be taken" }
+          ],
+          correct: ["A"],
+          explanation: "ICAEW can withdraw a member firm's licence to practise as chartered accountants."
+        },
+        {
+          id: "Q58b", lo: "LO 7g", type: "single",
+          question: "Vance, Mills and Aanwar (VMA), an ICAEW member firm, is accused of breaching confidentiality and misconduct.\n\nRequirement: Identify whether this action may be taken by ICAEW:\n'ICAEW may impose a fine on VMA.'",
+          options: [
+            { key: "C", text: "May be taken" },
+            { key: "D", text: "May not be taken" }
+          ],
+          correct: ["C"],
+          explanation: "ICAEW can impose financial penalties (fines) on member firms."
+        },
+        {
+          id: "Q58c", lo: "LO 7g", type: "single",
+          question: "Vance, Mills and Aanwar (VMA), an ICAEW member firm, is accused of breaching confidentiality and misconduct.\n\nRequirement: Identify whether this action may be taken by ICAEW:\n'ICAEW will require VMA to dismiss all employees involved in the breach.'",
+          options: [
+            { key: "E", text: "May be taken" },
+            { key: "F", text: "May not be taken" }
+          ],
+          correct: ["F"],
+          explanation: "ICAEW cannot require a firm to dismiss employees as it does not intervene in internal employment matters (though it can suspend individuals from membership)."
+        },
+        {
+          id: "Q59", lo: "LO 7g", type: "single",
+          question: "Ffion (ICAEW member) discovers her colleague Rina (also an ICAEW member) has been falsifying client timesheets.\n\nRequirement: What action is Ffion required to take?",
+          options: [
+            { key: "A", text: "Report Rina's actions to the ICAEW" },
+            { key: "B", text: "No action as Ffion is not Rina's manager" },
+            { key: "C", text: "Report the matter to the police without involving the ICAEW" },
+            { key: "D", text: "Inform management and let them handle the situation without further reporting" }
+          ],
+          correct: ["A"],
+          explanation: "Ffion has a duty to report to the ICAEW that she believes another member may be liable to disciplinary action."
+        },
+        {
+          id: "Q60", lo: "LO 7g", type: "single",
+          question: "Aisling overhears her colleague Noah (both ICAEW members at a firm) intentionally sharing confidential client financial information with a third party at a social event.\n\nRequirement: What is Aisling's duty in this situation?",
+          options: [
+            { key: "A", text: "Aisling has no duty to report this information as it was shared during a social event" },
+            { key: "B", text: "Aisling has a duty to report Noah's actions to the ICAEW and inform their firm's ethics partner" },
+            { key: "C", text: "Aisling has a duty to confront Noah and remind him of the ICAEW Code of Ethics" },
+            { key: "D", text: "Aisling has a duty to inform Noah's line manager but is not required to take any further actions" }
+          ],
+          correct: ["B"],
+          explanation: "ICAEW members have a duty to report misconduct to ICAEW and inform their firm's ethics partner so internal investigation and action can be taken."
+        },
+        {
+          id: "Q61", lo: "LO 7h", type: "single",
+          question: "The ICAEW Code of Ethics is a principles-based code.\n\nRequirement: What is an advantage of a principles-based code of ethics?",
+          options: [
+            { key: "A", text: "It focuses on intent and values" },
+            { key: "B", text: "It is easier to enforce than a rules-based code of ethics" },
+            { key: "C", text: "It discourages critical thinking as members do not need to strictly apply the rules" },
+            { key: "D", text: "It allows breaches of rules to be more easily identified" }
+          ],
+          correct: ["A"],
+          explanation: "A principles-based code focuses on intent and values rather than specific actions, encouraging individuals to apply the spirit of the law rather than just the letter."
+        },
+        {
+          id: "Q62a", lo: "LO 7h", type: "single",
+          question: "Differences between rules-based and principles-based codes of ethics:\n\nRequirement: Identify whether the following statement is true or false:\n'A rules-based code requires less interpretation than a principles-based code.'",
+          options: [
+            { key: "A", text: "True" },
+            { key: "B", text: "False" }
+          ],
+          correct: ["A"],
+          explanation: "A rules-based code is more rigid, requiring less interpretation than a principles-based code."
+        },
+        {
+          id: "Q62b", lo: "LO 7h", type: "single",
+          question: "Differences between rules-based and principles-based codes of ethics:\n\nRequirement: Identify whether the following statement is true or false:\n'A rules-based code places less emphasis on personal judgement and more emphasis on compliance than a principles-based code.'",
+          options: [
+            { key: "C", text: "True" },
+            { key: "D", text: "False" }
+          ],
+          correct: ["C"],
+          explanation: "A rules-based code emphasises compliance rather than personal judgement."
+        },
+        {
+          id: "Q62c", lo: "LO 7h", type: "single",
+          question: "Differences between rules-based and principles-based codes of ethics:\n\nRequirement: Identify whether the following statement is true or false:\n'A principles-based code is easier to enforce than a rules-based code.'",
+          options: [
+            { key: "E", text: "True" },
+            { key: "F", text: "False" }
+          ],
+          correct: ["F"],
+          explanation: "Breaches are easier to identify and enforce under a rules-based code due to its clear, explicit rules."
+        },
+        {
+          id: "Q63", lo: "LO 7i", type: "single",
+          question: "Sadiq is an ICAEW member working in business. Possible applicable codes:\n(1) IESBA International Code of Ethics for Professional Accountants.\n(2) The ICAEW Code of Ethics.\n(3) FRC Ethical Standard.\n\nRequirement: Which ethical code(s) apply to Sadiq in business?",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "2 only" },
+            { key: "C", text: "1 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["A"],
+          explanation: "The IESBA Code and ICAEW Code apply to Sadiq. The FRC Ethical Standard relates to audit/assurance work undertaken by members in practice, not in business."
+        },
+        {
+          id: "Q64", lo: "LO 7i", type: "single",
+          question: "Which of the following forms the basis of the ICAEW Code of Ethics?",
+          options: [
+            { key: "A", text: "UK Bribery Act" },
+            { key: "B", text: "IFRS Sustainability Disclosure Standards" },
+            { key: "C", text: "FRC Ethical Standard" },
+            { key: "D", text: "IESBA International Code of Ethics for Professional Accountants" }
+          ],
+          correct: ["D"],
+          explanation: "The ICAEW Code of Ethics is based on the IESBA International Code of Ethics, which sets out globally recognised principles."
+        },
+        {
+          id: "Q65", lo: "LO 7a", type: "multi", selectCount: 2,
+          question: "Which two of the following result from the application of professional ethics by professional accountants?",
+          options: [
+            { key: "A", text: "The work of professional accountants is free from error" },
+            { key: "B", text: "Clients, investors, regulators and the general public have more trust in the profession" },
+            { key: "C", text: "The public interest is protected by the prevention of fraud and emphasis on transparency and fairness" },
+            { key: "D", text: "Professional accountants can demand higher salaries" },
+            { key: "E", text: "Professional accountants must strictly follow rules and are not free to exercise their professional judgement" }
+          ],
+          correct: ["B", "C"],
+          explanation: "Applying professional ethics increases trust from stakeholders (B) and protects the public interest through fraud prevention, transparency, and fairness (C)."
+        },
+        {
+          id: "Q66", lo: "LO 7b", type: "single",
+          question: "Whalestar BV decided to publish its board meeting minutes and financial reports on its website for public access.\n\nRequirement: Which principle of good governance is Whalestar primarily demonstrating?",
+          options: [
+            { key: "A", text: "Transparency" },
+            { key: "B", text: "Accountability" },
+            { key: "C", text: "Internal controls" },
+            { key: "D", text: "Strategy" }
+          ],
+          correct: ["A"],
+          explanation: "Transparency involves being open to public scrutiny and making actions, decisions, and processes visible and understandable to stakeholders."
+        },
+        {
+          id: "Q67", lo: "LO 7a", type: "single",
+          question: "Aila listed examples of behaviours that may help protect the public interest:\n(1) Charging low fees for accounting services performed.\n(2) Protecting sensitive information by upholding client confidentiality.\n(3) Acting objectively and without bias when performing their work.\n\nRequirement: Which examples help protect the public interest?",
+          options: [
+            { key: "A", text: "1 and 2 only" },
+            { key: "B", text: "2 and 3 only" },
+            { key: "C", text: "1 and 3 only" },
+            { key: "D", text: "1, 2 and 3" }
+          ],
+          correct: ["B"],
+          explanation: "Upholding confidentiality (2) and acting objectively (3) protect the public interest. Charging low fees (1) may pressure firms to cut quality and thoroughness."
+        },
+        {
+          id: "Q68", lo: "LO 7a", type: "multi", selectCount: 2,
+          question: "Which two of the following are ways in which individual accountants working in business can act in the public interest?",
+          options: [
+            { key: "A", text: "Implementing guidance regarding the ethical sourcing of suppliers" },
+            { key: "B", text: "Setting up and participating in community projects" },
+            { key: "C", text: "Helping their employer to implement an aggressive tax planning scheme" },
+            { key: "D", text: "Providing sensitive information to competitors to promote more competition in their industry" },
+            { key: "E", text: "Ignoring misconduct issues that are not specifically covered by the ICAEW Code of Ethics" }
+          ],
+          correct: ["A", "B"],
+          explanation: "Ethical supplier sourcing (A) and community projects (B) serve the public interest. Aggressive tax planning, leaking sensitive info, and ignoring misconduct violate ethical duties."
+        },
+        {
+          id: "Q69a", lo: "LO 7e", type: "single",
+          question: "Hanna (manager at Unicorn GmbH) conducts performance reviews:\nDuring annual reviews, Hanna tends to rate team members who worked on large lucrative campaigns higher than those on smaller, less memorable campaigns.\n\nRequirement: Select the type of cognitive bias demonstrated by Hanna.",
+          options: [
+            { key: "A", text: "Framing bias" },
+            { key: "B", text: "Availability bias" }
+          ],
+          correct: ["B"],
+          explanation: "Availability bias occurs when decisions are influenced by the most memorable information rather than all available information."
+        },
+        {
+          id: "Q69b", lo: "LO 7e", type: "single",
+          question: "Hanna (manager at Unicorn GmbH) makes promotion decisions:\nHanna frequently recommends promoting employees who attended the same prestigious management training programme she completed.\n\nRequirement: Select the type of cognitive bias demonstrated by Hanna.",
+          options: [
+            { key: "C", text: "Affinity bias" },
+            { key: "D", text: "Confirmation bias" }
+          ],
+          correct: ["C"],
+          explanation: "Affinity bias leads individuals to favour those with similar backgrounds or experiences."
+        },
+        {
+          id: "Q70a", lo: "LO 7e", type: "single",
+          question: "Stephen decides to cancel a project because it was presented as having a 30% chance of failure, despite having a 70% chance of success.\n\nRequirement: Identify whether the following statement is true or false:\n'This is an example of framing bias.'",
+          options: [
+            { key: "A", text: "True" },
+            { key: "B", text: "False" }
+          ],
+          correct: ["A"],
+          explanation: "Framing bias occurs when presenting the same information differently (negative framing: 30% failure) leads to different decisions."
+        },
+        {
+          id: "Q70b", lo: "LO 7e", type: "single",
+          question: "Lena estimates future costs based on last year's budget, ignoring significant upcoming changes.\n\nRequirement: Identify whether the following statement is true or false:\n'This is an example of confirmation bias.'",
+          options: [
+            { key: "C", text: "True" },
+            { key: "D", text: "False" }
+          ],
+          correct: ["D"],
+          explanation: "Estimating future costs based on last year's budget while ignoring upcoming changes reflects anchoring bias, not confirmation bias."
+        }
+      ]
+    };
+
+    // =========================================================================
+    // 2. FLASHCARDS DATA (16 FOR CHAPTER 6 + 18 FOR CHAPTER 7)
+    // =========================================================================
+    const CHAPTER_FLASHCARDS = {
+      c6: [
+        { id: "C6-1", lo: "LO 6a", front: "Ethics & Ethical Theories", back: "• Ethics = study of values and principles influencing behaviour (morally correct).\n• Built up over thousands of years; NO single theory is correct in all places and at all times.\n• Helps clarify judgement, but is NOT a rule book with always one 'right' answer.", tip: "Bẫy: Học thuyết đạo đức KHÔNG phải mới xuất hiện từ thế kỷ 20–21." },
+        { id: "C6-2", lo: "LO 6a", front: "What drives changes in Business Ethics?", back: "The expectations of SOCIETY (which change over time) are the principal factor driving changes in acceptable business ethics.", tip: "Ví dụ: trả lương tối thiểu kèm thưởng CEO cao hay hợp đồng zero-hours là hợp pháp nhưng xã hội ngày càng coi là phi đạo đức." },
+        { id: "C6-3", lo: "LO 6c", front: "Law vs. Ethics", back: "• Acting ethically goes BEYOND obeying laws.\n• Legal but unethical: zero-hours contracts, switching from ethical leather to cheap supplier.\n• Contrary to legal/contractual rule but ethical: whistleblowing on child labour.", tip: "Hành vi bất hợp pháp (illegal) hầu như không bao giờ được coi là có đạo đức, trừ trường hợp đặc biệt như whistleblowing vì lợi ích xã hội." },
+        { id: "C6-4", lo: "LO 6b", front: "Objectivism vs. Relativism", back: "• Objectivism: Universal moral principles are true and binding everywhere -> leads to establishing RULES (e.g., report minimum wage breach regardless of industry norm).\n• Relativism: Morality depends on culture, society, or historical context (e.g., accepting local gift-giving norm).", tip: "Objectivism = Universal rules | Relativism = Culture/Context." },
+        { id: "C6-5", lo: "LO 6b", front: "Deontological Ethics", back: "Evaluates actions based on adherence to RULES or DUTIES (doing the right thing), REGARDLESS of consequences.\n(e.g., recalling faulty product or reporting audit irregularities despite financial/reputational harm).", tip: "Từ khóa: Duty, Right thing to do, Regardless of outcome/consequences." },
+        { id: "C6-6", lo: "LO 6b", front: "Teleological & Utilitarianism", back: "• Teleological (consequential): Judges actions by their CONSEQUENCES or outcomes (e.g., closing 1 store of 10 staff to save 250 jobs).\n• Utilitarianism: Greatest good for the greatest number of people.", tip: "Từ khóa: Consequences, Outcome, Greatest good for greatest number." },
+        { id: "C6-7", lo: "LO 6d", front: "3 Stakeholder Groups", back: "• Internal: Employees, Management, Directors.\n• Connected: Contractual relationship (NOT staff/mgmt) -> Shareholders, Customers, Suppliers.\n• External: Local charities, Local residents, Government.", tip: "Hay nhầm nhất: Shareholders là CONNECTED stakeholders, không phải Internal!" },
+        { id: "C6-8", lo: "LO 6e", front: "Corporate Code of Conduct / Ethics", back: "• Functions: Guides employees' behaviour + communicates ethical conduct to customers/suppliers.\n• Benefits: Promotes legal compliance (fewer fines) + openness, transparency & trust.\n• NOT a strict rulebook for every scenario and does NOT replace 'speak up' mechanisms.", tip: "Code of conduct là nguyên tắc (principles), không phải sách luật cứng nhắc." },
+        { id: "C6-9", lo: "LO 6e", front: "Group-think", back: "Occurs when the desire for conformity within a group overrides an individual's own ethical judgement, leading to unethical decisions.", tip: "Nhớ tình huống Jess (Q12): ban đầu thấy sai nhưng ăn trưa cùng phòng lại đồng tình theo đám đông." },
+        { id: "C6-10", lo: "LO 6e", front: "Building an Ethical Culture", back: "Requires:\n1. Ethical leadership ('tone at the top' from the Board).\n2. Corporate code of ethics.\n3. Supportive policies including a confidential 'speak up' programme and strong internal controls.", tip: "Thưởng theo lợi nhuận hay giảm kiểm soát KHÔNG thúc đẩy văn hóa đạo đức." },
+        { id: "C6-11", lo: "LO 6f", front: "Common Attributes of a Profession", back: "• High degree of autonomy & Self-regulation (permitted to set own regulations/policies).\n• Shared set of core values (Code of ethics).\n• Restricted entry to membership (strict technical/competence barriers).", tip: "Loại trừ: Permitted to set laws, Open access, High salaries, Held to account by external parties." },
+        { id: "C6-12", lo: "LO 6f", front: "Accountancy & Capital Markets", back: "Supports capital markets by ensuring high-quality, accurate information is provided to ALL stakeholders for decision making (NOT just institutional investors; NOT a direct provider of finance).", tip: "Kế toán không trực tiếp cho vay/cung cấp vốn." },
+        { id: "C6-13", lo: "LO 6f", front: "Primary Regulator of ICAEW Members", back: "• ICAEW has PRIMARY responsibility for regulating its members.\n• FRC has OVERSIGHT of ICAEW's regulation.\n• Employer creates supportive environment; Government sets legal framework.", tip: "Đề hỏi 'primary responsibility' -> chọn ICAEW." },
+        { id: "C6-14", lo: "LO 6f", front: "Social Responsibility", back: "Taking action to positively contribute to society beyond merely maximising shareholder returns or minimum legal compliance (e.g., volunteering leave, stricter-than-law H&S rules).", tip: "Trả lương tối thiểu chỉ là tuân thủ luật (legal compliance), chưa phải social responsibility." },
+        { id: "C6-15", lo: "LO 6g", front: "Scope of Professional Ethics", back: "Applies to ALL ICAEW members & students in ALL work undertaken in a professional capacity:\n• Paid work (audit, assurance, sustainability, management accounting).\n• Unpaid voluntary accountancy work (charity trustee, club treasurer).\n• Does NOT apply to non-accountancy roles (e.g., running/tennis coach).", tip: "Hễ dùng kỹ năng kế toán (kể cả làm tình nguyện miễn phí) -> BẮT BUỘC áp dụng." },
+        { id: "C6-16", lo: "LO 6a", front: "Personal vs. Professional Ethics", back: "• Personal ethics: e.g., joining weekend climate protests.\n• In the workplace, PROFESSIONAL ethics take precedence over personal ethics (e.g., Virgil must present accurate info to the bank, neither lying for his boss nor lying for his personal conservation beliefs).", tip: "Không được bóp méo số liệu dù vì mục đích cá nhân tốt đẹp." }
+      ],
+      c7: [
+        { id: "C7-1", lo: "LO 7a", front: "Public Interest & Public Trust", back: "• Public interest: Actions benefiting society as a whole, NOT just private interests or what the public finds 'interesting'.\n• Overriding duty is to the PUBLIC INTEREST (even over employer/client).\n• Built via ethical values, questioning mindset, transparency, and adapting to society.", tip: "Đừng nhầm 'public interest' với 'what followers find interesting'." },
+        { id: "C7-2", lo: "LO 7b, 7c", front: "Good / Ethical Governance", back: "Directing and controlling an organisation to achieve objectives acceptably and sustainably (risk assessment, stakeholder consultation, compliance checks, transparent & accountable decisions—not faster decisions).", tip: "Ethical governance = Transparent + Accountable + All stakeholders (không chỉ cổ đông)." },
+        { id: "C7-3", lo: "LO 7b", front: "Transparency vs. Accountability", back: "• Transparency: Being open to public scrutiny; making info/decisions visible (e.g., disclosing fire damage, publishing board minutes).\n• Accountability: Being required to explain/give an account of one's actions (e.g., appearing before audit committee or authorities).", tip: "Open with info = Transparency | Explain actions = Accountability." },
+        { id: "C7-4", lo: "LO 7d", front: "Professional Scepticism", back: "Critically assessing information, estimates, and explanations with a QUESTIONING MIND, alert to possible misstatements from error or fraud.\n• Question unusual transactions & verify conflicting data.\n• NOT blindly trusting management, and NOT assuming everyone is dishonest.", tip: "Từ khóa: Questioning mind, investigate further, challenge source reliability." },
+        { id: "C7-5", lo: "LO 7d", front: "Professional Judgement", back: "Applying training, knowledge, skill & experience considering:\n1. Facts & circumstances\n2. Nature & scope\n3. Interests & relationships involved.\n• Applies to ALL accountants (including trainees) & ALL matters (including ethics).\n• Must ultimately be YOUR OWN judgement.", tip: "Có thể tham vấn quản lý/chuyên gia/ICAEW, nhưng quyết định cuối cùng vẫn là của chính mình." },
+        { id: "C7-6", lo: "LO 7e", front: "Affinity Bias", back: "Favouring individuals who share similar characteristics, backgrounds, or experiences with you (e.g., same university, same training programme, socialising together).", tip: "Affinity = Giống mình / Quen thuộc." },
+        { id: "C7-7", lo: "LO 7e", front: "Availability Bias", back: "Making decisions based on the most readily available or most MEMORABLE/recent information rather than all relevant data (e.g., rewarding a recent big project or supplier used last month).", tip: "Availability = Nhớ rõ nhất / Mới xảy ra gần đây." },
+        { id: "C7-8", lo: "LO 7e", front: "Anchoring Bias", back: "Relying too heavily on an initial piece of information (the 'anchor') and failing to adjust for new data (e.g., basing this year's budget/revenue target on last year's figures despite big changes).", tip: "Anchoring = Neo vào số cũ / thông tin đầu tiên." },
+        { id: "C7-9", lo: "LO 7e", front: "Confirmation Bias", back: "Selectively seeking, interpreting, or focusing on information that confirms pre-existing beliefs/expectations while dismissing contradictory evidence.", tip: "Confirmation = Chỉ tin thứ củng cố định kiến sẵn có." },
+        { id: "C7-10", lo: "LO 7e", front: "Framing Bias", back: "Making decisions based on HOW information is presented rather than its actual content (e.g., cancelling a project framed as '30% failure' instead of '70% success', or focusing only on positive framing).", tip: "Framing = Cách trình bày thông tin (tích cực vs. tiêu cực)." },
+        { id: "C7-11", lo: "LO 7e", front: "Rush to Solve Bias", back: "Jumping quickly to a solution under time pressure without thoroughly understanding the problem or thinking through consequences (often triggers other biases like availability bias).", tip: "Rush to solve = Vội vàng chốt phương án vì gấp thời gian." },
+        { id: "C7-12", lo: "LO 7f", front: "Consequences of Unethical Behaviour", back: "• Individual: Dismissal, fines/imprisonment, ICAEW disciplinary action, loss of Practising Certificate, reputational damage.\n• Firm: Loss of clients/value, fines, loss of licences.\n• Profession: Loss of public trust, increased regulatory scrutiny.\n• Public as a whole: Loss of faith in the profession.", tip: "Phân biệt rõ hậu quả cho Cá nhân vs. Công ty vs. Nghề nghiệp vs. Công chúng." },
+        { id: "C7-13", lo: "LO 7f, 7g", front: "ICAEW Scope & Personal Life Misconduct", back: "• Code applies immediately upon student registration (all members, students, affiliates, firms—in practice OR in business).\n• Misconduct in PRIVATE life (e.g., racist social media posts, falsely witnessing a neighbour's contract) or cheating in ACA exams leads to ICAEW disciplinary action.", tip: "Làm việc trong doanh nghiệp (in business) vẫn bị ICAEW kỷ luật/khai trừ bình thường." },
+        { id: "C7-14", lo: "LO 7g", front: "ICAEW Sanctions (Individuals vs. Firms)", back: "• Can do: Severe reprimand, financial penalties (fines), exclude from membership, withdraw firm licences/designations, prohibit using 'Chartered Accountants'.\n• CANNOT do: Issue legal convictions, set/reduce audit fees, force a firm to dismiss employees, or remove a Practising Certificate from a firm (PC is for individuals).", tip: "Nhớ kỹ 4 điều ICAEW KHÔNG thể làm." },
+        { id: "C7-15", lo: "LO 7g", front: "Duty to Report to ICAEW", back: "ICAEW members MUST report if they become aware another member may be liable to disciplinary action (e.g., breaching confidentiality even if friend didn't act, falsifying timesheets—even overheard at a social event). Also inform the firm's ethics partner.\n• NO duty to report internal HR issues (e.g., being late to work).", tip: "Vi phạm Code of Ethics -> Duty to report. Đi làm muộn -> Không cần báo ICAEW." },
+        { id: "C7-16", lo: "LO 7h", front: "Rules-based vs. Principles-based Code", back: "• Rules-based: Clear guidelines (permissible vs forbidden), less interpretation, emphasises compliance, EASIER to enforce.\n• Principles-based (ICAEW): Focuses on intent/values & spirit of the law, encourages critical thinking, flexibility & professional judgement in complex situations.", tip: "Dễ cưỡng chế (easier to enforce) là ưu điểm của Rules-based, KHÔNG phải Principles-based." },
+        { id: "C7-17", lo: "LO 7i", front: "IESBA, ICAEW & FRC Ethical Standard", back: "• ICAEW Code is based on the IESBA International Code (5 fundamental principles: Integrity, Objectivity, Professional Competence & Due Care, Confidentiality, Professional Behaviour).\n• Members in business: IESBA + ICAEW Code.\n• FRC Ethical Standard: Audit & public interest assurance engagements (firms, partners & staff); overarching principles = Integrity & Objectivity; safeguards include Ethics Partner.", tip: "Accountability, Transparency, Independence KHÔNG nằm trong 5 nguyên tắc cơ bản của IESBA." },
+        { id: "C7-18", lo: "LO 7g", front: "Member Obligations (In Business)", back: "To abide by ICAEW regulations, a member in business must:\n• Undertake Continuing Professional Development (CPD).\n• Comply with the ICAEW Code of Ethics.\n(No Practising Certificate needed in business; no annual competence exam).", tip: "In business = CPD + Code of Ethics (không cần Practising Certificate)." }
+      ]
+    };
+
+    // =========================================================================
+    // 3. STATE MANAGEMENT (SEPARATED PER CHAPTER IN LOCALSTORAGE)
+    // =========================================================================
+    const STORAGE_KEY = "icaew_ethics_c6_c7_v1";
+
+    function createDefaultChapterData(chKey) {
+      return {
+        cycleNumber: 1,
+        flaggedIds: [],
+        cycleHistory: [],
+        fcStatus: {},
+        fcOrder: CHAPTER_FLASHCARDS[chKey].map(f => f.id)
+      };
+    }
+
+    let persisted = {
+      c6: createDefaultChapterData("c6"),
+      c7: createDefaultChapterData("c7")
+    };
+
+    let session = {
+      activeChapter: "c6", // 'c6' | 'c7'
+      activeTab: "quiz",   // 'quiz' | 'flashcards' | 'review'
+      quizMode: "practice",
+      // Per-chapter live quiz runtime state so switching chapters preserves current progress
+      runtime: {
+        c6: { isSubsetCycle: false, order: [], currentIndex: 0, answers: {}, examGraded: false, fcFilter: "all", fcIndex: 0, fcFlipped: false },
+        c7: { isSubsetCycle: false, order: [], currentIndex: 0, answers: {}, examGraded: false, fcFilter: "all", fcIndex: 0, fcFlipped: false }
+      }
+    };
+
+    function loadPersisted() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          ["c6", "c7"].forEach(ch => {
+            if (parsed[ch]) {
+              persisted[ch] = {
+                cycleNumber: parsed[ch].cycleNumber || 1,
+                flaggedIds: Array.isArray(parsed[ch].flaggedIds) ? parsed[ch].flaggedIds : [],
+                cycleHistory: Array.isArray(parsed[ch].cycleHistory) ? parsed[ch].cycleHistory : [],
+                fcStatus: parsed[ch].fcStatus || {},
+                fcOrder: CHAPTER_FLASHCARDS[ch].map(f => f.id)
+              };
+            }
+          });
+        }
+      } catch (e) {
+        console.warn("Could not load localStorage:", e);
+      }
+    }
+
+    function savePersisted() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          c6: {
+            cycleNumber: persisted.c6.cycleNumber,
+            flaggedIds: persisted.c6.flaggedIds,
+            cycleHistory: persisted.c6.cycleHistory,
+            fcStatus: persisted.c6.fcStatus
+          },
+          c7: {
+            cycleNumber: persisted.c7.cycleNumber,
+            flaggedIds: persisted.c7.flaggedIds,
+            cycleHistory: persisted.c7.cycleHistory,
+            fcStatus: persisted.c7.fcStatus
+          }
+        }));
+      } catch (e) {
+        console.warn("Could not save localStorage:", e);
+      }
+    }
+
+    function shuffleArray(arr) {
+      const copy = [...arr];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    function curCh() { return session.activeChapter; }
+    function curPersisted() { return persisted[session.activeChapter]; }
+    function curRuntime() { return session.runtime[session.activeChapter]; }
+    function curQuestions() { return CHAPTER_QUESTIONS[session.activeChapter]; }
+    function curFlashcards() { return CHAPTER_FLASHCARDS[session.activeChapter]; }
+    function getQuestionById(id) { return curQuestions().find(q => q.id === id); }
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      toast.textContent = msg;
+      toast.classList.remove("hidden");
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => toast.classList.add("hidden"), 2300);
+    }
+
+    // =========================================================================
+    // 4. CHAPTER & TAB SWITCHING
+    // =========================================================================
+    function switchChapter(chKey) {
+      if (session.activeChapter === chKey) return;
+      session.activeChapter = chKey;
+      closeSummaryModal();
+
+      // Update chapter buttons
+      ["c6", "c7"].forEach(k => {
+        const btn = document.getElementById(`ch-btn-${k}`);
+        if (k === chKey) {
+          btn.className = "flex-1 md:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition-all bg-sky-600 text-white shadow-sm";
+        } else {
+          btn.className = "flex-1 md:flex-none px-3.5 py-2 rounded-lg text-xs font-bold transition-all text-slate-600 hover:text-slate-900";
+        }
+      });
+
+      const meta = CHAPTER_META[chKey];
+      document.getElementById("header-title").textContent = meta.name;
+      document.getElementById("header-subtitle").textContent = `ICAEW Sustainability & Ethics • ${CHAPTER_QUESTIONS[chKey].length} mục câu hỏi`;
+      document.getElementById("fc-heading").textContent = `Flashcards ôn tập mỗi ngày (${meta.short})`;
+      document.getElementById("flagged-heading").textContent = `Danh sách câu Phân vân / Chọn lụi (${meta.short})`;
+      document.getElementById("history-heading").textContent = `Lịch sử chu kỳ ôn tập (${meta.short})`;
+
+      updateFlagBadge();
+      if (session.activeTab === "quiz") renderQuiz();
+      if (session.activeTab === "flashcards") renderFlashcard();
+      if (session.activeTab === "review") renderReviewTab();
+      showToast(`Đã chuyển sang ${meta.name}`);
+    }
+
+    function switchTab(tab) {
+      session.activeTab = tab;
+      ["quiz", "flashcards", "review"].forEach(t => {
+        document.getElementById(`view-${t}`).classList.toggle("hidden", t !== tab);
+        const btn = document.getElementById(`tab-${t}`);
+        if (t === tab) {
+          btn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all bg-white text-sky-700 shadow-sm relative";
+        } else {
+          btn.className = "flex-1 sm:flex-none px-4 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition-all text-slate-600 hover:text-slate-900 relative";
+        }
+      });
+
+      if (tab === "quiz") renderQuiz();
+      if (tab === "flashcards") renderFlashcard();
+      if (tab === "review") renderReviewTab();
+    }
+
+    function updateFlagBadge() {
+      const count = curPersisted().flaggedIds.length;
+      const badge = document.getElementById("flag-count-badge");
+      if (count > 0) {
+        badge.textContent = count;
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+    }
+
+    // =========================================================================
+    // 5. QUIZ ENGINE
+    // =========================================================================
+    function startNewCycle(incrementNumber = true, customIds = null) {
+      closeSummaryModal();
+      const p = curPersisted();
+      const rt = curRuntime();
+
+      if (incrementNumber && !customIds) {
+        p.cycleNumber += 1;
+        savePersisted();
+      }
+      rt.isSubsetCycle = Boolean(customIds);
+      const ids = customIds ? customIds : curQuestions().map(q => q.id);
+      rt.order = shuffleArray(ids);
+      rt.currentIndex = 0;
+      rt.answers = {};
+      rt.examGraded = false;
+
+      renderQuiz();
+      showToast(customIds
+        ? `Bắt đầu ôn ${ids.length} câu sai & phân vân!`
+        : `Đã xáo trộn chu kỳ #${p.cycleNumber} (${ids.length} câu)`
+      );
+    }
+
+    function setQuizMode(mode) {
+      if (session.quizMode === mode) return;
+      session.quizMode = mode;
+
+      const btnP = document.getElementById("mode-practice");
+      const btnE = document.getElementById("mode-exam");
+      if (mode === "practice") {
+        btnP.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-sky-600 text-white shadow-sm";
+        btnE.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:text-slate-900";
+      } else {
+        btnE.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all bg-sky-600 text-white shadow-sm";
+        btnP.className = "px-3 py-1.5 rounded-lg text-xs font-semibold transition-all text-slate-600 hover:text-slate-900";
+      }
+
+      const rt = curRuntime();
+      rt.answers = {};
+      rt.examGraded = false;
+      rt.currentIndex = 0;
+      renderQuiz();
+      showToast(mode === "practice" ? "Chế độ Luyện tập: Hiện đáp án ngay" : "Chế độ Kiểm tra: Nộp bài cuối chu kỳ");
+    }
+
+    function checkExactMatch(selected, correct) {
+      if (selected.length !== correct.length) return false;
+      const s = [...selected].sort();
+      const c = [...correct].sort();
+      return s.every((val, idx) => val === c[idx]);
+    }
+
+    function selectOption(optionKey) {
+      const rt = curRuntime();
+      const qId = rt.order[rt.currentIndex];
+      const q = getQuestionById(qId);
+      const ans = rt.answers[qId] || { selected: [], checked: false, isCorrect: false };
+
+      if ((session.quizMode === "practice" && ans.checked) || (session.quizMode === "exam" && rt.examGraded)) {
+        return;
+      }
+
+      if (q.type === "single") {
+        ans.selected = [optionKey];
+        if (session.quizMode === "practice") {
+          ans.checked = true;
+          ans.isCorrect = checkExactMatch(ans.selected, q.correct);
+        }
+      } else {
+        if (ans.selected.includes(optionKey)) {
+          ans.selected = ans.selected.filter(k => k !== optionKey);
+        } else {
+          if (ans.selected.length < q.selectCount) {
+            ans.selected.push(optionKey);
+          } else {
+            showToast(`Câu này chỉ chọn tối đa ${q.selectCount} đáp án.`);
+            return;
+          }
+        }
+      }
+
+      rt.answers[qId] = ans;
+      renderQuiz();
+    }
+
+    function submitMultiPractice() {
+      const rt = curRuntime();
+      const qId = rt.order[rt.currentIndex];
+      const q = getQuestionById(qId);
+      const ans = rt.answers[qId];
+      if (!ans || ans.selected.length === 0) {
+        showToast(`Hãy chọn ${q.selectCount} đáp án trước khi xác nhận.`);
+        return;
+      }
+      ans.checked = true;
+      ans.isCorrect = checkExactMatch(ans.selected, q.correct);
+      rt.answers[qId] = ans;
+      renderQuiz();
+    }
+
+    function toggleFlagCurrent() {
+      const rt = curRuntime();
+      const p = curPersisted();
+      const qId = rt.order[rt.currentIndex];
+
+      if (p.flaggedIds.includes(qId)) {
+        p.flaggedIds = p.flaggedIds.filter(id => id !== qId);
+        showToast(`Đã bỏ đánh dấu ${qId}`);
+      } else {
+        p.flaggedIds.push(qId);
+        showToast(`Đã đánh dấu ${qId} (Phân vân / Chọn lụi)`);
+      }
+      savePersisted();
+      updateFlagBadge();
+      renderQuiz();
+    }
+
+    function prevQuestion() {
+      const rt = curRuntime();
+      if (rt.currentIndex > 0) {
+        rt.currentIndex--;
+        renderQuiz();
+      }
+    }
+
+    function nextQuestion() {
+      const rt = curRuntime();
+      if (rt.currentIndex < rt.order.length - 1) {
+        rt.currentIndex++;
+        renderQuiz();
+      } else {
+        finishCycle();
+      }
+    }
+
+    function jumpToQuestion(idx) {
+      curRuntime().currentIndex = idx;
+      renderQuiz();
+    }
+
+    function toggleNavigator() {
+      const nav = document.getElementById("question-navigator");
+      const label = document.getElementById("nav-toggle-label");
+      const isHidden = nav.classList.toggle("hidden");
+      label.textContent = isHidden ? "Hiện danh sách câu hỏi" : "Ẩn danh sách câu hỏi";
+    }
+
+    function finishCycle() {
+      const rt = curRuntime();
+      const p = curPersisted();
+      const total = rt.order.length;
+      let correctCount = 0;
+      let wrongCount = 0;
+      let flaggedInCycle = 0;
+
+      rt.order.forEach(qId => {
+        const q = getQuestionById(qId);
+        const ans = rt.answers[qId] || { selected: [], checked: false, isCorrect: false };
+        ans.checked = true;
+        ans.isCorrect = checkExactMatch(ans.selected, q.correct);
+        rt.answers[qId] = ans;
+
+        if (ans.isCorrect) correctCount++;
+        else wrongCount++;
+
+        if (p.flaggedIds.includes(qId)) flaggedInCycle++;
+      });
+
+      rt.examGraded = true;
+      const accuracyRate = Math.round((correctCount / total) * 100);
+      const errorRate = Math.round((wrongCount / total) * 100);
+
+      p.cycleHistory.unshift({
+        cycle: rt.isSubsetCycle ? `Ôn tập (${total} câu)` : `Chu kỳ #${p.cycleNumber}`,
+        date: new Date().toLocaleString("vi-VN", { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" }),
+        mode: session.quizMode === "practice" ? "Luyện tập" : "Kiểm tra",
+        total,
+        correct: correctCount,
+        wrong: wrongCount,
+        errorRate,
+        flagged: flaggedInCycle
+      });
+      if (p.cycleHistory.length > 20) p.cycleHistory.pop();
+      savePersisted();
+
+      document.getElementById("modal-cycle-subtitle").textContent =
+        `${CHAPTER_META[curCh()].short} • ${rt.isSubsetCycle ? "Phiên ôn câu yếu" : "Chu kỳ #" + p.cycleNumber} • ${session.quizMode === "practice" ? "Luyện tập" : "Kiểm tra"} (${total} câu)`;
+      document.getElementById("modal-correct").textContent = `${correctCount}/${total} (${accuracyRate}%)`;
+      document.getElementById("modal-wrong").textContent = wrongCount;
+      document.getElementById("modal-error-rate").textContent = `${errorRate}%`;
+      document.getElementById("modal-flagged").textContent = flaggedInCycle;
+
+      const weakCount = getWeakIdsInCurrentCycle().length;
+      const weakBtn = document.getElementById("modal-btn-review-weak");
+      if (weakCount > 0) {
+        weakBtn.classList.remove("hidden");
+        weakBtn.textContent = `Ôn lại ${weakCount} câu sai & phân vân`;
+      } else {
+        weakBtn.classList.add("hidden");
+      }
+
+      renderQuiz();
+      openSummaryModal();
+    }
+
+    function getWeakIdsInCurrentCycle() {
+      const rt = curRuntime();
+      const p = curPersisted();
+      const set = new Set();
+      rt.order.forEach(qId => {
+        const ans = rt.answers[qId];
+        if (!ans || !ans.isCorrect) set.add(qId);
+        if (p.flaggedIds.includes(qId)) set.add(qId);
+      });
+      return Array.from(set);
+    }
+
+    function startWeakCycleFromModal() {
+      const weakIds = getWeakIdsInCurrentCycle();
+      if (weakIds.length === 0) {
+        showToast("Tuyệt vời! Không có câu sai hay phân vân nào.");
+        closeSummaryModal();
+        return;
+      }
+      startNewCycle(false, weakIds);
+    }
+
+    function openSummaryModal() { document.getElementById("summary-modal").classList.remove("hidden"); }
+    function closeSummaryModal() { document.getElementById("summary-modal").classList.add("hidden"); }
+
+    function renderQuiz() {
+      const rt = curRuntime();
+      const p = curPersisted();
+      const total = rt.order.length;
+      const qId = rt.order[rt.currentIndex];
+      const q = getQuestionById(qId);
+      const ans = rt.answers[qId] || { selected: [], checked: false, isCorrect: false };
+      const isFlagged = p.flaggedIds.includes(qId);
+      const showFeedback = (session.quizMode === "practice" && ans.checked) || (session.quizMode === "exam" && rt.examGraded);
+
+      document.getElementById("cycle-badge").textContent = rt.isSubsetCycle
+        ? `Ôn câu yếu (${total} câu)`
+        : `Chu kỳ #${p.cycleNumber} (${total} câu)`;
+
+      document.getElementById("btn-submit-exam").classList.toggle("hidden", !(session.quizMode === "exam" && !rt.examGraded));
+
+      // Exam Graded Banner
+      const banner = document.getElementById("exam-review-banner");
+      if (session.quizMode === "exam" && rt.examGraded) {
+        const correctCount = rt.order.filter(id => rt.answers[id]?.isCorrect).length;
+        const acc = Math.round((correctCount / total) * 100);
+        const err = 100 - acc;
+        document.getElementById("exam-review-stats").textContent = `Đúng ${correctCount}/${total} câu (${acc}%) • Tỷ lệ sai: ${err}%`;
+        banner.classList.remove("hidden");
+      } else {
+        banner.classList.add("hidden");
+      }
+
+      // Progress & Live Error Rate
+      const answeredCount = rt.order.filter(id => {
+        const a = rt.answers[id];
+        if (!a) return false;
+        return session.quizMode === "practice" ? a.checked : a.selected.length > 0;
+      }).length;
+      const pct = Math.round((answeredCount / total) * 100);
+      document.getElementById("progress-text").textContent = `${answeredCount}/${total} câu (${pct}%)`;
+      document.getElementById("progress-bar").style.width = `${pct}%`;
+
+      const liveErrorBadge = document.getElementById("live-error-badge");
+      if ((session.quizMode === "practice" && answeredCount > 0) || rt.examGraded) {
+        const checkedIds = rt.order.filter(id => rt.answers[id]?.checked);
+        const wrongSoFar = checkedIds.filter(id => !rt.answers[id].isCorrect).length;
+        const errPct = checkedIds.length > 0 ? Math.round((wrongSoFar / checkedIds.length) * 100) : 0;
+        liveErrorBadge.textContent = `Tỷ lệ sai: ${errPct}% (${wrongSoFar}/${checkedIds.length})`;
+        liveErrorBadge.classList.remove("hidden");
+      } else {
+        liveErrorBadge.classList.add("hidden");
+      }
+
+      // Meta
+      document.getElementById("q-position").textContent = `Câu ${rt.currentIndex + 1} / ${total}`;
+      document.getElementById("q-original-id").textContent = q.id;
+      document.getElementById("q-lo-badge").textContent = q.lo;
+
+      const multiBadge = document.getElementById("q-multi-badge");
+      if (q.type === "multi") {
+        multiBadge.textContent = `Chọn ${q.selectCount} đáp án`;
+        multiBadge.classList.remove("hidden");
+      } else {
+        multiBadge.classList.add("hidden");
+      }
+
+      // Flag Button
+      const btnFlag = document.getElementById("btn-flag");
+      const btnFlagText = document.getElementById("btn-flag-text");
+      if (isFlagged) {
+        btnFlag.className = "flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-amber-100 border-amber-300 text-amber-800";
+        btnFlagText.textContent = "Đã đánh dấu phân vân";
+      } else {
+        btnFlag.className = "flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border text-xs font-semibold transition-all bg-white border-slate-200 text-slate-600 hover:bg-slate-50";
+        btnFlagText.textContent = "Phân vân / Chọn lụi";
+      }
+
+      document.getElementById("q-text").textContent = q.question;
+
+      // Options
+      const optionsContainer = document.getElementById("q-options");
+      optionsContainer.innerHTML = "";
+      q.options.forEach(opt => {
+        const isSelected = ans.selected.includes(opt.key);
+        const isCorrectOpt = q.correct.includes(opt.key);
+
+        let classes = "w-full text-left p-3.5 sm:p-4 rounded-2xl border-2 transition-all flex items-start gap-3 ";
+        let badgeClasses = "w-7 h-7 rounded-lg flex items-center justify-center text-xs font-bold shrink-0 mt-0.5 ";
+
+        if (showFeedback) {
+          if (isCorrectOpt) {
+            classes += "bg-emerald-50 border-emerald-500 text-emerald-950";
+            badgeClasses += "bg-emerald-600 text-white";
+          } else if (isSelected && !isCorrectOpt) {
+            classes += "bg-rose-50 border-rose-400 text-rose-950";
+            badgeClasses += "bg-rose-500 text-white";
+          } else {
+            classes += "bg-slate-50/60 border-slate-100 text-slate-400";
+            badgeClasses += "bg-slate-200 text-slate-500";
+          }
+        } else {
+          if (isSelected) {
+            classes += "bg-sky-50 border-sky-500 text-sky-950 shadow-xs";
+            badgeClasses += "bg-sky-600 text-white";
+          } else {
+            classes += "bg-white border-slate-200 hover:border-sky-300 hover:bg-slate-50 text-slate-700";
+            badgeClasses += "bg-slate-100 text-slate-600";
+          }
+        }
+
+        const btn = document.createElement("button");
+        btn.className = classes;
+        btn.onclick = () => selectOption(opt.key);
+        btn.innerHTML = `
+          <span class="${badgeClasses}">${opt.key}</span>
+          <span class="text-sm sm:text-base leading-snug font-medium flex-1">${opt.text}</span>
+          ${showFeedback && isCorrectOpt ? '<span class="text-emerald-600 font-bold text-sm shrink-0">✓</span>' : ''}
+          ${showFeedback && isSelected && !isCorrectOpt ? '<span class="text-rose-500 font-bold text-sm shrink-0">✕</span>' : ''}
+        `;
+        optionsContainer.appendChild(btn);
+      });
+
+      document.getElementById("multi-check-wrap").classList.toggle("hidden", !(q.type === "multi" && session.quizMode === "practice" && !ans.checked));
+
+      // Explanation
+      const expBox = document.getElementById("explanation-box");
+      if (showFeedback) {
+        expBox.classList.remove("hidden");
+        const statusBadge = document.getElementById("exp-status-badge");
+        if (ans.isCorrect) {
+          expBox.className = "mt-6 p-4 sm:p-5 rounded-2xl border bg-emerald-50/70 border-emerald-200";
+          statusBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-600 text-white";
+          statusBadge.textContent = "Chính xác!";
+        } else {
+          expBox.className = "mt-6 p-4 sm:p-5 rounded-2xl border bg-rose-50/70 border-rose-200";
+          statusBadge.className = "px-2.5 py-0.5 rounded-full text-xs font-bold bg-rose-600 text-white";
+          statusBadge.textContent = "Chưa đúng";
+        }
+        document.getElementById("exp-correct-answer").textContent = `Đáp án đúng: ${q.correct.join(", ")} (${q.lo})`;
+        document.getElementById("exp-text").textContent = q.explanation;
+      } else {
+        expBox.classList.add("hidden");
+      }
+
+      document.getElementById("btn-prev").disabled = rt.currentIndex === 0;
+      document.getElementById("btn-next").textContent = rt.currentIndex === total - 1
+        ? (rt.examGraded ? "Xem tổng kết" : "Hoàn thành chu kỳ ✓")
+        : "Câu tiếp →";
+
+      // Navigator Grid
+      const navGrid = document.getElementById("nav-grid");
+      navGrid.innerHTML = "";
+      rt.order.forEach((id, idx) => {
+        const a = rt.answers[id];
+        const flagged = p.flaggedIds.includes(id);
+        let dotClass = "h-8 rounded-lg text-xs font-bold transition-all relative flex items-center justify-center border ";
+        if (idx === rt.currentIndex) dotClass += "ring-2 ring-slate-800 ring-offset-1 ";
+
+        if (a && (session.quizMode === "practice" ? a.checked : rt.examGraded)) {
+          dotClass += a.isCorrect ? "bg-emerald-500 text-white border-emerald-600" : "bg-rose-500 text-white border-rose-600";
+        } else if (a && a.selected.length > 0) {
+          dotClass += "bg-sky-500 text-white border-sky-600";
+        } else {
+          dotClass += "bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100";
+        }
+
+        const btn = document.createElement("button");
+        btn.className = dotClass;
+        btn.onclick = () => jumpToQuestion(idx);
+        btn.innerHTML = `${idx + 1}${flagged ? '<span class="absolute -top-1 -right-1 w-2.5 h-2.5 rounded-full bg-amber-400 border border-white"></span>' : ''}`;
+        navGrid.appendChild(btn);
+      });
+    }
+
+    // =========================================================================
+    // 6. FLASHCARDS ENGINE
+    // =========================================================================
+    function getActiveFlashcardList() {
+      const p = curPersisted();
+      const rt = curRuntime();
+      if (rt.fcFilter === "review") {
+        return p.fcOrder.filter(id => p.fcStatus[id] !== "mastered");
+      }
+      return p.fcOrder;
+    }
+
+    function setFlashcardFilter(filter) {
+      const rt = curRuntime();
+      rt.fcFilter = filter;
+      rt.fcIndex = 0;
+      rt.fcFlipped = false;
+
+      const btnAll = document.getElementById("fc-filter-all");
+      const btnRev = document.getElementById("fc-filter-review");
+      if (filter === "all") {
+        btnAll.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm";
+        btnRev.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600";
+      } else {
+        btnRev.className = "px-3 py-1.5 rounded-lg text-xs font-semibold bg-white text-sky-700 shadow-sm";
+        btnAll.className = "px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600";
+      }
+      renderFlashcard();
+    }
+
+    function shuffleFlashcards() {
+      const p = curPersisted();
+      const rt = curRuntime();
+      p.fcOrder = shuffleArray(p.fcOrder);
+      rt.fcIndex = 0;
+      rt.fcFlipped = false;
+      renderFlashcard();
+      showToast("Đã xáo trộn bộ Flashcards!");
+    }
+
+    function flipFlashcard() {
+      const rt = curRuntime();
+      rt.fcFlipped = !rt.fcFlipped;
+      document.getElementById("fc-card").classList.toggle("rotate-y-180", rt.fcFlipped);
+    }
+
+    function markFlashcard(status) {
+      const list = getActiveFlashcardList();
+      if (list.length === 0) return;
+      const p = curPersisted();
+      const rt = curRuntime();
+      const fcId = list[rt.fcIndex];
+      p.fcStatus[fcId] = status;
+      savePersisted();
+
+      showToast(status === "mastered" ? "Đã đánh dấu: Đã nhớ ✓" : "Đã đánh dấu: Cần ôn lại");
+      rt.fcFlipped = false;
+      const newList = getActiveFlashcardList();
+      if (rt.fcIndex >= newList.length) rt.fcIndex = Math.max(0, newList.length - 1);
+      else if (rt.fcFilter === "all" && rt.fcIndex < newList.length - 1) rt.fcIndex++;
+      renderFlashcard();
+    }
+
+    function prevFlashcard() {
+      const list = getActiveFlashcardList();
+      if (list.length === 0) return;
+      const rt = curRuntime();
+      rt.fcIndex = (rt.fcIndex - 1 + list.length) % list.length;
+      rt.fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function nextFlashcard() {
+      const list = getActiveFlashcardList();
+      if (list.length === 0) return;
+      const rt = curRuntime();
+      rt.fcIndex = (rt.fcIndex + 1) % list.length;
+      rt.fcFlipped = false;
+      renderFlashcard();
+    }
+
+    function renderFlashcard() {
+      const p = curPersisted();
+      const rt = curRuntime();
+      const allCards = curFlashcards();
+      const totalAll = allCards.length;
+      const masteredCount = allCards.filter(f => p.fcStatus[f.id] === "mastered").length;
+      const reviewCount = totalAll - masteredCount;
+
+      document.getElementById("fc-total-count").textContent = totalAll;
+      document.getElementById("fc-review-count").textContent = reviewCount;
+      document.getElementById("fc-mastered-stats").textContent = `Đã nhớ: ${masteredCount} / ${totalAll}`;
+
+      const list = getActiveFlashcardList();
+      document.getElementById("fc-card").classList.toggle("rotate-y-180", rt.fcFlipped);
+
+      if (list.length === 0) {
+        document.getElementById("fc-position").textContent = "0 / 0";
+        document.getElementById("fc-front-tag").textContent = "Hoàn tất";
+        document.getElementById("fc-status-pill").textContent = "100% Đã nhớ";
+        document.getElementById("fc-front-text").textContent = `Tuyệt vời! Bạn đã nhớ hết tất cả Flashcards ${CHAPTER_META[curCh()].short}.`;
+        document.getElementById("fc-back-text").textContent = "Chuyển sang tab 'Tất cả' nếu bạn muốn ôn lại từ đầu.";
+        document.getElementById("fc-back-tip").textContent = "";
+        return;
+      }
+
+      if (rt.fcIndex >= list.length) rt.fcIndex = 0;
+      const fc = allCards.find(f => f.id === list[rt.fcIndex]);
+      const status = p.fcStatus[fc.id];
+
+      document.getElementById("fc-position").textContent = `Thẻ ${rt.fcIndex + 1} / ${list.length}`;
+      document.getElementById("fc-front-tag").textContent = fc.lo;
+      document.getElementById("fc-back-tag").textContent = fc.id;
+      document.getElementById("fc-front-text").textContent = fc.front;
+      document.getElementById("fc-back-text").textContent = fc.back;
+      document.getElementById("fc-back-tip").textContent = fc.tip;
+
+      const pill = document.getElementById("fc-status-pill");
+      if (status === "mastered") {
+        pill.className = "px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700";
+        pill.textContent = "✓ Đã nhớ";
+      } else if (status === "review") {
+        pill.className = "px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-800";
+        pill.textContent = "Cần ôn lại";
+      } else {
+        pill.className = "px-2.5 py-1 rounded-full text-xs font-semibold bg-slate-100 text-slate-500";
+        pill.textContent = "Chưa đánh giá";
+      }
+    }
+
+    // =========================================================================
+    // 7. REVIEW & STATS TAB
+    // =========================================================================
+    function renderReviewTab() {
+      const p = curPersisted();
+      const allCards = curFlashcards();
+      const masteredCount = allCards.filter(f => p.fcStatus[f.id] === "mastered").length;
+
+      document.getElementById("stat-cycles").textContent = p.cycleHistory.length;
+      document.getElementById("stat-last-error").textContent = p.cycleHistory.length > 0 ? `${p.cycleHistory[0].errorRate}%` : "--%";
+      document.getElementById("stat-flagged").textContent = p.flaggedIds.length;
+      document.getElementById("stat-fc-mastered").textContent = `${masteredCount}/${allCards.length}`;
+
+      document.getElementById("btn-practice-flagged").disabled = p.flaggedIds.length === 0;
+
+      const flaggedContainer = document.getElementById("flagged-list");
+      if (p.flaggedIds.length === 0) {
+        flaggedContainer.innerHTML = `<p class="text-sm text-slate-400 italic py-4 text-center">Chưa có câu nào được đánh dấu phân vân trong ${CHAPTER_META[curCh()].short}.</p>`;
+      } else {
+        flaggedContainer.innerHTML = p.flaggedIds.map(id => {
+          const q = getQuestionById(id);
+          if (!q) return "";
+          return `
+            <div class="p-4 rounded-2xl border border-amber-200 bg-amber-50/40 flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+              <div class="space-y-1">
+                <div class="flex items-center gap-2">
+                  <span class="px-2 py-0.5 rounded-md bg-slate-800 text-white text-[11px] font-bold">${q.id}</span>
+                  <span class="px-2 py-0.5 rounded-md bg-sky-50 text-sky-700 text-[11px] font-semibold">${q.lo}</span>
+                  <span class="text-xs font-bold text-emerald-700">Đáp án: ${q.correct.join(", ")}</span>
+                </div>
+                <p class="text-sm font-semibold text-slate-800">${q.question.split('\n')[0]}</p>
+                <p class="text-xs text-slate-600 leading-relaxed">${q.explanation}</p>
+              </div>
+              <button onclick="unflagFromReview('${q.id}')" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-600 shrink-0">
+                Bỏ đánh dấu
+              </button>
+            </div>
+          `;
+        }).join("");
+      }
+
+      const historyContainer = document.getElementById("history-list");
+      if (p.cycleHistory.length === 0) {
+        historyContainer.innerHTML = `<p class="text-sm text-slate-400 italic py-4 text-center">Chưa có chu kỳ nào hoàn thành trong ${CHAPTER_META[curCh()].short}.</p>`;
+      } else {
+        historyContainer.innerHTML = `
+          <table class="w-full text-left border-collapse text-xs sm:text-sm">
+            <thead>
+              <tr class="border-b border-slate-200 text-slate-500">
+                <th class="py-2.5 pr-3 font-semibold">Chu kỳ</th>
+                <th class="py-2.5 px-3 font-semibold">Thời gian</th>
+                <th class="py-2.5 px-3 font-semibold">Chế độ</th>
+                <th class="py-2.5 px-3 font-semibold">Đúng / Tổng</th>
+                <th class="py-2.5 px-3 font-semibold">Tỷ lệ sai</th>
+                <th class="py-2.5 pl-3 font-semibold">Phân vân</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100">
+              ${p.cycleHistory.map(h => `
+                <tr>
+                  <td class="py-2.5 pr-3 font-bold text-slate-800">${h.cycle}</td>
+                  <td class="py-2.5 px-3 text-slate-500">${h.date}</td>
+                  <td class="py-2.5 px-3 text-slate-600">${h.mode}</td>
+                  <td class="py-2.5 px-3 font-semibold text-emerald-700">${h.correct}/${h.total}</td>
+                  <td class="py-2.5 px-3 font-bold ${h.errorRate > 25 ? 'text-rose-600' : 'text-emerald-600'}">${h.errorRate}%</td>
+                  <td class="py-2.5 pl-3 text-amber-700 font-semibold">${h.flagged}</td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        `;
+      }
+    }
+
+    function unflagFromReview(qId) {
+      const p = curPersisted();
+      p.flaggedIds = p.flaggedIds.filter(id => id !== qId);
+      savePersisted();
+      updateFlagBadge();
+      renderReviewTab();
+      renderQuiz();
+    }
+
+    function startFlaggedOnlyCycle() {
+      const p = curPersisted();
+      if (p.flaggedIds.length === 0) return;
+      switchTab("quiz");
+      startNewCycle(false, [...p.flaggedIds]);
+    }
+
+    function showResetConfirm() {
+      document.getElementById("reset-confirm-area").innerHTML = `
+        <div class="flex items-center gap-2">
+          <span class="text-xs text-slate-600">Xóa dữ liệu ${CHAPTER_META[curCh()].short}?</span>
+          <button onclick="confirmResetChapter()" class="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-xs font-semibold">Xóa</button>
+          <button onclick="cancelResetChapter()" class="px-2.5 py-1 rounded-lg bg-slate-100 text-slate-600 text-xs font-semibold">Hủy</button>
+        </div>
+      `;
+    }
+
+    function cancelResetChapter() {
+      document.getElementById("reset-confirm-area").innerHTML = `
+        <button onclick="showResetConfirm()" class="text-xs font-semibold text-rose-600 hover:text-rose-800 underline">
+          Xóa dữ liệu chương này
+        </button>
+      `;
+    }
+
+    function confirmResetChapter() {
+      const ch = curCh();
+      persisted[ch] = createDefaultChapterData(ch);
+      savePersisted();
+      cancelResetChapter();
+      updateFlagBadge();
+      renderReviewTab();
+      startNewCycle(false);
+      showToast(`Đã đặt lại toàn bộ dữ liệu ${CHAPTER_META[ch].short}.`);
+    }
+
+    // =========================================================================
+    // 8. KEYBOARD SHORTCUTS & INIT
+    // =========================================================================
+    document.addEventListener("keydown", (e) => {
+      if (session.activeTab === "quiz" && document.getElementById("summary-modal").classList.contains("hidden")) {
+        if (e.key === "ArrowLeft") prevQuestion();
+        if (e.key === "ArrowRight") nextQuestion();
+      } else if (session.activeTab === "flashcards") {
+        if (e.code === "Space") {
+          e.preventDefault();
+          flipFlashcard();
+        } else if (e.key === "ArrowLeft") {
+          prevFlashcard();
+        } else if (e.key === "ArrowRight") {
+          nextFlashcard();
+        }
+      }
+    });
+
+    // Initialize both chapters
+    loadPersisted();
+    session.runtime.c6.order = shuffleArray(CHAPTER_QUESTIONS.c6.map(q => q.id));
+    session.runtime.c7.order = shuffleArray(CHAPTER_QUESTIONS.c7.map(q => q.id));
+    updateFlagBadge();
+    renderQuiz();
+  </script>
+</body>
+</html>
